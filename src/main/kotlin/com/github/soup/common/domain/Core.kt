@@ -9,7 +9,7 @@ import javax.persistence.*
 
 @MappedSuperclass
 @EntityListeners(value = [AuditingEntityListener::class])
-class Core {
+open class Core {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
