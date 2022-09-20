@@ -1,24 +1,25 @@
 package com.github.soup.auth.application.config
 
-import org.springframework.beans.factory.DisposableBean
-import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.TestConfiguration
 import redis.embedded.RedisServer
+import redis.embedded.RedisServerBuilder
+import javax.annotation.PostConstruct
+import javax.annotation.PreDestroy
 
 @TestConfiguration
-class EmbeddedRedisConfig : InitializingBean, DisposableBean {
-	@Value("\${spring.redis.port}")
-	private lateinit var port: String
+class EmbeddedRedisConfig(
+	@Value("\${spring.redis.port}") private val port: Int
+) {
+	private val redisServer: RedisServer = RedisServerBuilder().port(port).build()
 
-	private lateinit var redisService: RedisServer
-
-	override fun afterPropertiesSet() {
-		this.redisService = RedisServer(this.port.toInt())
-		this.redisService.start()
+	@PostConstruct
+	fun postConstruct() {
+		redisServer.start()
 	}
 
-	override fun destroy() {
-		this.redisService.stop()
+	@PreDestroy
+	fun preDestroy() {
+		redisServer.stop()
 	}
 }

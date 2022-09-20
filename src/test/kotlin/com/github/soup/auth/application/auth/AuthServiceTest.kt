@@ -1,5 +1,6 @@
 package com.github.soup.auth.application.auth
 
+import com.github.soup.auth.application.config.EmbeddedRedisConfig
 import com.github.soup.auth.application.token.TokenServiceImpl
 import com.github.soup.auth.domain.auth.AuthType
 import com.github.soup.auth.exceptions.AlreadyExistingAuthException
@@ -8,7 +9,6 @@ import com.github.soup.auth.infra.http.request.ReIssueRequest
 import com.github.soup.auth.infra.http.request.SignInRequest
 import com.github.soup.auth.infra.http.request.SignUpRequest
 import com.github.soup.auth.infra.http.response.TokenResponse
-import com.github.soup.auth.infra.persistence.token.TokenRepositoryImpl
 import com.github.soup.member.domain.Member
 import com.github.soup.member.domain.SexType
 import com.github.soup.member.infra.persistence.MemberRepositoryImpl
@@ -18,16 +18,17 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
+@Import(value = [EmbeddedRedisConfig::class])
 @SpringBootTest
 @Transactional
 internal class AuthServiceTest(
 	@Autowired private val authService: AuthServiceImpl,
 	@Autowired private val tokenService: TokenServiceImpl,
 	@Autowired private val memberRepository: MemberRepositoryImpl,
-	@Autowired private val tokenRepository: TokenRepositoryImpl
 ) {
 	@Test
 	@DisplayName("회원가입을 할 수 있어요.")
@@ -155,24 +156,5 @@ internal class AuthServiceTest(
 		assertThat(result).isNotNull.isInstanceOf(TokenResponse::class.java)
 		assertThat(result.accessToken).isNotEmpty.isNotEqualTo(token.accessToken)
 		assertThat(result.refreshToken).isNotEmpty.isNotEqualTo(token.refreshToken)
-	}
-
-	@Test
-	@DisplayName("로그아웃 할 수 있어요.")
-	fun logout() {
-		val token = authService.create(
-			SignUpRequest(
-				type = AuthType.Kakao,
-				token = UUID.randomUUID().toString(),
-				name = "test_name",
-				nickName = "test_nickname",
-				sex = SexType.Male
-			)
-		)
-
-		val result = authService.logout(tokenService.parse(token.accessToken))
-
-		assertThat(result).isTrue
-		assertThat(tokenRepository.getByKey(tokenService.parse(token.accessToken))).isNull()
 	}
 }
