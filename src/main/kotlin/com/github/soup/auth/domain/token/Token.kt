@@ -6,14 +6,13 @@ import javax.validation.constraints.NotBlank
 
 class Token(
 	@NotBlank
-	val authId: String,
-
-	@NotBlank
 	val accessToken: String,
 
 	@NotBlank
 	val refreshToken: String,
 ) : Serializable {
+	constructor() : this("", "")
+
 	fun toResponse(): TokenResponse {
 		return TokenResponse(
 			accessToken = this.accessToken,

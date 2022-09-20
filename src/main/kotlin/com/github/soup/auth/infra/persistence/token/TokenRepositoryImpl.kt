@@ -13,7 +13,7 @@ class TokenRepositoryImpl(
 	private val redisTemplate: RedisTemplate<Any, Any>
 ) : TokenRepository {
 	override fun getByKey(key: String): Token? {
-		return getOperations().get(key)
+		return getOperations().get(key) as Token?
 	}
 
 	override fun save(key: String, token: Token, timeToLive: Long): Token {
@@ -25,8 +25,8 @@ class TokenRepositoryImpl(
 		getOperations().getAndDelete(key)
 	}
 
-	private fun getOperations(): ValueOperations<String, Token> {
+	private fun getOperations(): ValueOperations<Any, Any> {
 		redisTemplate.valueSerializer = Jackson2JsonRedisSerializer(Token::class.java)
-		return redisTemplate.opsForValue() as ValueOperations<String, Token>
+		return redisTemplate.opsForValue()
 	}
 }

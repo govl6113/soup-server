@@ -15,10 +15,12 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.security.Key
 import java.util.*
 
 @Service
+@Transactional(readOnly = true)
 class TokenServiceImpl(
 	@Value("\${jwt.secret}")
 	private val secretKey: String,
@@ -41,6 +43,7 @@ class TokenServiceImpl(
 		refreshTokenExpiredDate = refreshExpired.toLong()
 	}
 
+	@Transactional
 	override fun create(auth: Auth): Token {
 		val currentTime = Date().time
 
@@ -59,9 +62,8 @@ class TokenServiceImpl(
 			.compact()
 
 		return tokenRepository.save(
-			auth.id,
+			auth.id!!,
 			Token(
-				authId = auth.id,
 				accessToken = accessToken,
 				refreshToken = refreshToken
 			),
@@ -69,8 +71,9 @@ class TokenServiceImpl(
 		)
 	}
 
+	@Transactional
 	override fun remove(auth: Auth): Boolean {
-		tokenRepository.delete(auth.id)
+		tokenRepository.delete(auth.id!!)
 		return true
 	}
 

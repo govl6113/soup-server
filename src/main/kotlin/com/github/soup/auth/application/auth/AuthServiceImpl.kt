@@ -60,17 +60,19 @@ class AuthServiceImpl(
 		return tokenService.create(auth).toResponse()
 	}
 
+	@Transactional
 	override fun reissue(request: ReIssueRequest): TokenResponse {
 		if (!tokenService.validation(request.refreshToken)) {
 			throw InvalidTokenException()
 		}
 
-		val auth = authRepository.getById(tokenService.parse(request.refreshToken))
+		val auth = authRepository.getByMemberId(tokenService.parse(request.refreshToken))
 			?: throw NotFoundAuthException()
 
 		return tokenService.create(auth).toResponse()
 	}
 
+	@Transactional
 	override fun logout(memberId: String): Boolean {
 		val auth = authRepository.getByMemberId(memberId) ?: throw NotFoundAuthException()
 
