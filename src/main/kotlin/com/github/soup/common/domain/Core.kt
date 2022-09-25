@@ -9,17 +9,17 @@ import javax.persistence.*
 
 @MappedSuperclass
 @EntityListeners(value = [AuditingEntityListener::class])
-class Core {
+open class Core {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	@Column(columnDefinition = "BINARY(16)")
-	lateinit var id: String
+	@Column(columnDefinition = "CHAR(36)")
+	var id: String? = null
 
 	@CreatedDate
 	@Column(updatable = false)
-	lateinit var createdAt: LocalDateTime
+	var createdAt: LocalDateTime? = null
 
 	@LastModifiedDate
-	lateinit var updatedAt: LocalDateTime
+	var updatedAt: LocalDateTime? = null
 }
