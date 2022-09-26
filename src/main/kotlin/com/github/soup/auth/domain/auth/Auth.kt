@@ -18,6 +18,7 @@ class Auth(
 
 	@Column(nullable = false)
 	val clientId: String,
+
 ) : Core() {
 	@OneToMany(targetEntity = Role::class, mappedBy = "auth", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
 	val roles: List<Role> = listOf(
