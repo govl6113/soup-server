@@ -1,4 +1,4 @@
-package com.github.soup.auth.application.config
+package com.github.soup.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.TestConfiguration

@@ -1,6 +1,5 @@
 package com.github.soup.auth.application.auth
 
-import com.github.soup.auth.application.config.EmbeddedRedisConfig
 import com.github.soup.auth.application.token.TokenServiceImpl
 import com.github.soup.auth.domain.auth.AuthType
 import com.github.soup.auth.exceptions.AlreadyExistingAuthException
@@ -9,6 +8,7 @@ import com.github.soup.auth.infra.http.request.ReIssueRequest
 import com.github.soup.auth.infra.http.request.SignInRequest
 import com.github.soup.auth.infra.http.request.SignUpRequest
 import com.github.soup.auth.infra.http.response.TokenResponse
+import com.github.soup.config.EmbeddedRedisConfig
 import com.github.soup.member.domain.Member
 import com.github.soup.member.domain.SexType
 import com.github.soup.member.infra.persistence.MemberRepositoryImpl
