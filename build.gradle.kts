@@ -30,6 +30,9 @@ dependencies {
 	// web
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
+	// swagger
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
+
 	// security
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	compileOnly("io.jsonwebtoken:jjwt-api:0.11.5")
