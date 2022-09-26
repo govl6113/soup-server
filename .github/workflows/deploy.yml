@@ -75,7 +75,7 @@ jobs:
           DOCKER_NAME: application
         run: |
           /home/soup/commands/remove_docker_container.sh ${{ env.DOCKER_NAME }} ${{ env.DOCKER_IMAGE }}:latest
-          docker run -d -p 80:8080 \
+          docker run -d -p 8080:8080 \
           --net soup \
           --name ${{ env.DOCKER_NAME }} \
           --restart always ${{ env.DOCKER_IMAGE }}:latest
