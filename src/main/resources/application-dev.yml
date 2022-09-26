@@ -3,22 +3,19 @@ server:
 
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test;MODE=MySQL
-    username: su
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/soup
+    username: soup
+    password: Y29tLmdpdGh1Yi5jZS1zb3VwLnNvdXAtc2VydmVyLm15c3FsLnBhc3N3b3JkCg
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
+      ddl-auto: update
 
   redis:
-    host: localhost
+    host: redis
     port: 6379
+    password: Y29tLmdpdGh1Yi5jZS1zb3VwLnNvdXAtc2VydmVyLnJlZGlzLnBhc3N3b3JkCg
 
   mvc:
     pathmatch:

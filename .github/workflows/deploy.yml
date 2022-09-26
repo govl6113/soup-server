@@ -1,0 +1,80 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - develop
+
+env:
+  VERSION: ${{ github.sha }}
+  DOCKER_IMAGE: ghcr.io/ce-soup/soup-server
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 1. set up jdk 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 2. grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: 3. build with gradle
+        run: ./gradlew clean build
+
+      - name: 4. set up docker buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: 5. set up docker layer caches
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ env.version }}
+          restore-keys: |
+            ${{ runner.os }}-buildx
+
+      - name: 6. login to ghcr
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: himitery
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: 7. docker build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          push: true
+          tags: ${{ env.DOCKER_IMAGE }}:latest
+
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: [ self-hosted, ce-soup ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 1. login to ghcr
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: himitery
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: 2. docker run
+        env:
+          DOCKER_NAME: application
+        run: |
+          /home/soup/commands/remove_docker_container.sh ${{ env.DOCKER_NAME }} ${{ env.DOCKER_IMAGE }}:latest
+          docker run -d -p 8080:8080 \
+          --net soup \
+          --name ${{ env.DOCKER_NAME }} \
+          --restart always ${{ env.DOCKER_IMAGE }}:latest
