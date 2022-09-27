@@ -20,7 +20,7 @@ class SignUpRequest(
 
 	@NotBlank
 	@Length(min = 2)
-	val nickName: String,
+	val nickname: String,
 
 	@NotNull
 	val sex: SexType,

@@ -38,7 +38,7 @@ internal class AuthServiceTest(
 				type = AuthType.Kakao,
 				token = UUID.randomUUID().toString(),
 				name = "test_name",
-				nickName = "test_nickname",
+				nickname = "test_nickname",
 				sex = SexType.Male
 			)
 		)
@@ -49,7 +49,7 @@ internal class AuthServiceTest(
 
 		assertThat(member).isInstanceOf(Member::class.java)
 		assertThat(member?.name).isInstanceOf(String::class.java).isEqualTo("test_name")
-		assertThat(member?.nickName).isInstanceOf(String::class.java).isEqualTo("test_nickname")
+		assertThat(member?.nickname).isInstanceOf(String::class.java).isEqualTo("test_nickname")
 		assertThat(member?.sex).isInstanceOf(SexType::class.java).isEqualTo(SexType.Male)
 	}
 
@@ -63,7 +63,7 @@ internal class AuthServiceTest(
 				type = AuthType.Kakao,
 				token = token,
 				name = "test_name",
-				nickName = "test_nickname",
+				nickname = "test_nickname",
 				sex = SexType.Male
 			)
 		)
@@ -74,7 +74,7 @@ internal class AuthServiceTest(
 					type = AuthType.Kakao,
 					token = token,
 					name = "test_name",
-					nickName = "test_nickname",
+					nickname = "test_nickname",
 					sex = SexType.Male
 				)
 			)
@@ -86,7 +86,7 @@ internal class AuthServiceTest(
 					type = AuthType.Kakao,
 					token = token,
 					name = "other_test_name",
-					nickName = "other_test_nickname",
+					nickname = "other_test_nickname",
 					sex = SexType.Female
 				)
 			)
@@ -103,7 +103,7 @@ internal class AuthServiceTest(
 				type = AuthType.Kakao,
 				token = token,
 				name = "test_name",
-				nickName = "test_nickname",
+				nickname = "test_nickname",
 				sex = SexType.Male
 			)
 		)
@@ -139,7 +139,7 @@ internal class AuthServiceTest(
 				type = AuthType.Kakao,
 				token = UUID.randomUUID().toString(),
 				name = "test_name",
-				nickName = "test_nickname",
+				nickname = "test_nickname",
 				sex = SexType.Male
 			)
 		)

@@ -44,7 +44,7 @@ class AuthServiceImpl(
 		val member = memberRepository.save(
 			Member(
 				name = request.name,
-				nickName = request.nickName,
+				nickname = request.nickname,
 				sex = request.sex
 			)
 		)

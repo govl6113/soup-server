@@ -11,7 +11,7 @@ class Member(
 	val name: String,
 
 	@NotBlank
-	val nickName: String,
+	val nickname: String,
 
 	@NotNull
 	val sex: SexType
