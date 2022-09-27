@@ -21,11 +21,11 @@ class AuthController(
 	fun login(@RequestBody @Valid request: SignInRequest) = authService.login(request)
 
 	@PostMapping("/new")
-	fun new(@RequestBody @Valid request: SignUpRequest) = authService.create(request)
+	fun new(@Valid request: SignUpRequest) = authService.create(request)
 
 	@PostMapping("/reissue")
 	fun reissue(@RequestBody @Valid request: ReIssueRequest) = authService.reissue(request)
 
-	@PostMapping("/delete")
+	@PostMapping("/logout")
 	fun logout(@ApiIgnore authentication: Authentication) = authService.logout(authentication.name)
 }
