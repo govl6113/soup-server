@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
-class SignUpRequest(
+data class SignUpRequest(
 	@NotNull
 	val type: AuthType,
 

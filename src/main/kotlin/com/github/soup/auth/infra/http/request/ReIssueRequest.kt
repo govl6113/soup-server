@@ -2,7 +2,7 @@ package com.github.soup.auth.infra.http.request
 
 import javax.validation.constraints.NotBlank
 
-class ReIssueRequest(
+data class ReIssueRequest(
 	@NotBlank
 	val accessToken: String,
 
