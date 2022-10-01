@@ -11,6 +11,8 @@ import com.github.soup.auth.infra.http.request.SignInRequest
 import com.github.soup.auth.infra.http.request.SignUpRequest
 import com.github.soup.auth.infra.http.response.TokenResponse
 import com.github.soup.auth.infra.persistence.auth.AuthRepositoryImpl
+import com.github.soup.file.application.facade.FileFacadeImpl
+import com.github.soup.file.domain.FileType
 import com.github.soup.member.domain.Member
 import com.github.soup.member.infra.persistence.MemberRepositoryImpl
 import org.springframework.stereotype.Service
@@ -22,7 +24,8 @@ class AuthServiceImpl(
 	private val tokenService: TokenServiceImpl,
 	private val oAuthService: OAuthServiceImpl,
 	private val authRepository: AuthRepositoryImpl,
-	private val memberRepository: MemberRepositoryImpl
+	private val memberRepository: MemberRepositoryImpl,
+	private val fileFacade: FileFacadeImpl
 ) : AuthService {
 	@Transactional
 	override fun login(request: SignInRequest): TokenResponse {
@@ -45,7 +48,8 @@ class AuthServiceImpl(
 			Member(
 				name = request.name,
 				nickname = request.nickname,
-				sex = request.sex
+				sex = request.sex,
+				bio = request.bio
 			)
 		)
 

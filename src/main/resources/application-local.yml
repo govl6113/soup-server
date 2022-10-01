@@ -2,11 +2,6 @@ server:
   port: 8080
 
 spring:
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 1024MB
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/soup
@@ -31,3 +26,12 @@ jwt:
   expired:
     access: 86400000
     refresh: 604800000
+
+minio:
+  bucketName: bucket
+  endpoint: localhost
+  accessKey: soup
+  secretKey: password
+
+storage:
+  host: http://localhost:9000
