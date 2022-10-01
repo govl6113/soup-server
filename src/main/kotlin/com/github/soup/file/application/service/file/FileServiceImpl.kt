@@ -22,7 +22,7 @@ class FileServiceImpl(
     )
 
     @Transactional
-    override fun upload(uploader: Member, type: FileType, image: MultipartFile): File {
+    override fun save(uploader: Member, type: FileType, image: MultipartFile): File {
         val mime = if (image.originalFilename == null) "jpeg" else
             image.originalFilename!!
                 .substring(

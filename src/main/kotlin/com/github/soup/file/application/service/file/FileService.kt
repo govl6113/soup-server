@@ -6,7 +6,7 @@ import com.github.soup.member.domain.Member
 import org.springframework.web.multipart.MultipartFile
 
 interface FileService {
-    fun upload(uploader: Member, type: FileType, image: MultipartFile): File
+    fun save(uploader: Member, type: FileType, image: MultipartFile): File
 
     fun delete(fileId: String)
 }

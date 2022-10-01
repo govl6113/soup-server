@@ -1,7 +1,7 @@
 package com.github.soup.file.domain
 
 import com.github.soup.common.domain.Core
-import com.github.soup.file.infra.http.FileResponse
+import com.github.soup.file.infra.http.response.FileResponse
 import com.github.soup.member.domain.Member
 import org.springframework.beans.factory.annotation.Value
 import java.util.*

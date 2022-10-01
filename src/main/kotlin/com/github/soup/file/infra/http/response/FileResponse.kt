@@ -1,4 +1,4 @@
-package com.github.soup.file.infra.http
+package com.github.soup.file.infra.http.response
 
 import java.time.LocalDateTime
 

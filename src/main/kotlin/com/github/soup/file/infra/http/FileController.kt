@@ -17,9 +17,9 @@ class FileController(
 
     @PostMapping("/upload")
     fun upload(@ApiIgnore authentication: Authentication, image: MultipartFile) =
-        fileFacade.upload(authentication.name, FileType.POST, image)
+        fileFacade.upload(authentication.name, FileType.POST, image).toResponse()
 
     @PostMapping("/uploads")
     fun uploads(@ApiIgnore authentication: Authentication, images: List<MultipartFile>) =
-        fileFacade.uploads(authentication.name, FileType.POST, images)
+        fileFacade.uploads(authentication.name, FileType.POST, images).map { file -> file.toResponse() }
 }

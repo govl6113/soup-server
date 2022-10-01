@@ -25,7 +25,7 @@ data class SignUpRequest(
 	@NotNull
 	val sex: SexType,
 
-	val bio: String?,
+	val bio: String? = null,
 
-	val profileImage: MultipartFile?
+	val profileImage: MultipartFile? = null
 )
