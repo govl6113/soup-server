@@ -35,7 +35,7 @@ internal class AuthServiceTest(
 	fun signUp() {
 		val response = authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = UUID.randomUUID().toString(),
 				name = "test_name",
 				nickname = "test_nickname",
@@ -60,7 +60,7 @@ internal class AuthServiceTest(
 
 		authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = token,
 				name = "test_name",
 				nickname = "test_nickname",
@@ -71,7 +71,7 @@ internal class AuthServiceTest(
 		Assertions.assertThrows(AlreadyExistingAuthException::class.java) {
 			authService.create(
 				SignUpRequest(
-					type = AuthType.Kakao,
+					type = AuthType.KAKAO,
 					token = token,
 					name = "test_name",
 					nickname = "test_nickname",
@@ -83,7 +83,7 @@ internal class AuthServiceTest(
 		Assertions.assertThrows(AlreadyExistingAuthException::class.java) {
 			authService.create(
 				SignUpRequest(
-					type = AuthType.Kakao,
+					type = AuthType.KAKAO,
 					token = token,
 					name = "other_test_name",
 					nickname = "other_test_nickname",
@@ -100,7 +100,7 @@ internal class AuthServiceTest(
 
 		authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = token,
 				name = "test_name",
 				nickname = "test_nickname",
@@ -110,7 +110,7 @@ internal class AuthServiceTest(
 
 		val response = authService.login(
 			SignInRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = token,
 			)
 		)
@@ -124,7 +124,7 @@ internal class AuthServiceTest(
 		Assertions.assertThrows(NotFoundAuthException::class.java) {
 			authService.login(
 				SignInRequest(
-					type = AuthType.Kakao,
+					type = AuthType.KAKAO,
 					token = UUID.randomUUID().toString(),
 				)
 			)
@@ -136,7 +136,7 @@ internal class AuthServiceTest(
 	fun reissue() {
 		val token = authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = UUID.randomUUID().toString(),
 				name = "test_name",
 				nickname = "test_nickname",

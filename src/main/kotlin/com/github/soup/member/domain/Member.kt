@@ -26,18 +26,4 @@ class Member(
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "profile_id", nullable = true)
 	var profileImage: File? = null,
-) : Core(){
-
-	fun update(nickname: String?, bio: String?) {
-		if (nickname != null) {
-			this.nickname = nickname
-		}
-		if (bio != null) {
-			this.bio = bio
-		}
-	}
-
-	fun updateProfileImage(file: File) {
-		profileImage = file
-	}
-}
+) : Core()

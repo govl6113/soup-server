@@ -15,7 +15,7 @@ class OAuthServiceImpl : OAuthService {
 		val template = RestTemplate()
 
 		return when (type) {
-			AuthType.Kakao -> {
+			AuthType.KAKAO -> {
 				val headers = HttpHeaders()
 				headers.set("Authorization", "Bearer $token")
 

@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 
 @Configuration
-class MinioConfig {
-    @Value("\${minio.endpoint}")
+class StorageConfig {
+    @Value("\${storage.endpoint}")
     private val endpoint: String? = null
 
-    @Value("\${minio.accessKey}")
+    @Value("\${storage.accessKey}")
     private val accessKey: String? = null
 
-    @Value("\${minio.secretKey}")
+    @Value("\${storage.secretKey}")
     private val secretKey: String? = null
 
     @Bean

@@ -54,13 +54,13 @@ class AuthServiceImpl(
 		)
 
 		if(request.profileImage!=null){
-			member.updateProfileImage(
+			member.profileImage =
 				fileFacade.upload(
 					memberId = member.id!!,
 					type = FileType.PROFILE,
 					image = request.profileImage
 				)
-			)
+
 		}
 
 		val auth = authRepository.save(

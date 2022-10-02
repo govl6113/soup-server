@@ -4,6 +4,7 @@ import com.github.soup.file.application.service.file.FileServiceImpl
 import com.github.soup.file.application.service.storage.StorageServiceImpl
 import com.github.soup.file.domain.File
 import com.github.soup.file.domain.FileType
+import com.github.soup.file.exception.StorageUploadException
 import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
 import org.springframework.stereotype.Component
@@ -25,10 +26,14 @@ class FileFacadeImpl(
             image = image
         )
 
-        storageService.upload(
+        val uploadResult: Boolean = storageService.upload(
             key = file.key,
             image = image
         )
+        if(!uploadResult){
+            throw StorageUploadException()
+        }
+
         return file
     }
 

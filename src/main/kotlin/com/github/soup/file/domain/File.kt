@@ -23,7 +23,7 @@ class File(
 
 ) : Core() {
 
-    @Value("\${storage.host}")
+    @Value("\${storage.endpoint}")
     private val host: String = ""
 
     constructor(uploader: Member, type: FileType, mime: String) : this(

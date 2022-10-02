@@ -12,7 +12,7 @@ class StorageServiceImpl(
     private val minioClient: MinioClient
 ) : StorageService {
 
-    @Value("\${minio.bucketName}")
+    @Value("\${storage.bucketName}")
     private val bucketName: String = "bucket"
 
     override fun upload(key: String, image: MultipartFile): Boolean {
@@ -26,6 +26,8 @@ class StorageServiceImpl(
             )
             true
         } catch (e: Exception) {
+            print(e.message)
+            e.printStackTrace()
             false
         }
     }

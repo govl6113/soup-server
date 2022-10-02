@@ -27,11 +27,8 @@ jwt:
     access: 86400000
     refresh: 604800000
 
-minio:
+storage:
   bucketName: bucket
-  endpoint: localhost
+  endpoint: http://localhost:9000
   accessKey: soup
   secretKey: password
-
-storage:
-  host: http://localhost:9000
