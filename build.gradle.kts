@@ -20,6 +20,7 @@ repositories {
 
 allOpen {
 	annotation("javax.persistence.Entity")
+	annotation("javax.persistence.MappedSuperclass")
 }
 
 noArg {
@@ -46,6 +47,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("mysql:mysql-connector-java")
+	implementation("io.minio:minio:8.2.1")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("it.ozimov:embedded-redis:0.7.3") {
 		exclude("org.slf4j", "slf4j-simple")

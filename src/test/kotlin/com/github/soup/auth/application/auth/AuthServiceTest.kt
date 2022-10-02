@@ -35,11 +35,11 @@ internal class AuthServiceTest(
 	fun signUp() {
 		val response = authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = UUID.randomUUID().toString(),
 				name = "test_name",
 				nickname = "test_nickname",
-				sex = SexType.Male
+				sex = SexType.MALE
 			)
 		)
 
@@ -50,7 +50,7 @@ internal class AuthServiceTest(
 		assertThat(member).isInstanceOf(Member::class.java)
 		assertThat(member?.name).isInstanceOf(String::class.java).isEqualTo("test_name")
 		assertThat(member?.nickname).isInstanceOf(String::class.java).isEqualTo("test_nickname")
-		assertThat(member?.sex).isInstanceOf(SexType::class.java).isEqualTo(SexType.Male)
+		assertThat(member?.sex).isInstanceOf(SexType::class.java).isEqualTo(SexType.MALE)
 	}
 
 	@Test
@@ -60,22 +60,22 @@ internal class AuthServiceTest(
 
 		authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = token,
 				name = "test_name",
 				nickname = "test_nickname",
-				sex = SexType.Male
+				sex = SexType.MALE
 			)
 		)
 
 		Assertions.assertThrows(AlreadyExistingAuthException::class.java) {
 			authService.create(
 				SignUpRequest(
-					type = AuthType.Kakao,
+					type = AuthType.KAKAO,
 					token = token,
 					name = "test_name",
 					nickname = "test_nickname",
-					sex = SexType.Male
+					sex = SexType.MALE
 				)
 			)
 		}
@@ -83,11 +83,11 @@ internal class AuthServiceTest(
 		Assertions.assertThrows(AlreadyExistingAuthException::class.java) {
 			authService.create(
 				SignUpRequest(
-					type = AuthType.Kakao,
+					type = AuthType.KAKAO,
 					token = token,
 					name = "other_test_name",
 					nickname = "other_test_nickname",
-					sex = SexType.Female
+					sex = SexType.FEMAIL
 				)
 			)
 		}
@@ -100,17 +100,17 @@ internal class AuthServiceTest(
 
 		authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = token,
 				name = "test_name",
 				nickname = "test_nickname",
-				sex = SexType.Male
+				sex = SexType.MALE
 			)
 		)
 
 		val response = authService.login(
 			SignInRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = token,
 			)
 		)
@@ -124,7 +124,7 @@ internal class AuthServiceTest(
 		Assertions.assertThrows(NotFoundAuthException::class.java) {
 			authService.login(
 				SignInRequest(
-					type = AuthType.Kakao,
+					type = AuthType.KAKAO,
 					token = UUID.randomUUID().toString(),
 				)
 			)
@@ -136,11 +136,11 @@ internal class AuthServiceTest(
 	fun reissue() {
 		val token = authService.create(
 			SignUpRequest(
-				type = AuthType.Kakao,
+				type = AuthType.KAKAO,
 				token = UUID.randomUUID().toString(),
 				name = "test_name",
 				nickname = "test_nickname",
-				sex = SexType.Male
+				sex = SexType.MALE
 			)
 		)
 

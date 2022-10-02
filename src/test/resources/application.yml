@@ -29,3 +29,10 @@ jwt:
   expired:
     access: 86400000
     refresh: 604800000
+
+storage:
+  bucketName: bucket
+  endpoint: http://localhost:9000
+  accessKey: soup
+  secretKey: password
+  host: http://localhost:9000
