@@ -31,3 +31,9 @@ jwt:
   expired:
     access: 86400000
     refresh: 604800000
+
+storage:
+  bucketName: bucket
+  endpoint: http://133.186.215.107:9000
+  accessKey: soup
+  secretKey: password

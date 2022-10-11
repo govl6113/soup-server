@@ -57,7 +57,7 @@ class SearchFacadeTest(
         val member1 = memberRepository.getById(tokenService.parse(member1Response.accessToken))
         val member2 = memberRepository.getById(tokenService.parse(member2Response.accessToken))
 
-        val group = groupFacade.create(
+        groupFacade.create(
             memberId = member1?.id!!,
             request = CreateGroupRequest(
                 name = "group",
