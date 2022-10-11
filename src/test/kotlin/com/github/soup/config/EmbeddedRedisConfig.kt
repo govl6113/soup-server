@@ -9,17 +9,25 @@ import javax.annotation.PreDestroy
 
 @TestConfiguration
 class EmbeddedRedisConfig(
-	@Value("\${spring.redis.port}") private val port: Int
+    @Value("\${spring.redis.port}")
+    private val port: Int,
+
+    @Value("\${spring.redis.max-memory}")
+    private val maxMemory: String
 ) {
-	private val redisServer: RedisServer = RedisServerBuilder().port(port).build()
+    private var redisServer: RedisServer = RedisServerBuilder().port(port).build()
 
-	@PostConstruct
-	fun postConstruct() {
-		redisServer.start()
-	}
+    @PostConstruct
+    fun postConstruct() {
+        redisServer = RedisServer.builder()
+            .port(port)
+            .setting("maxmemory $maxMemory")
+            .build()
+        redisServer.start()
+    }
 
-	@PreDestroy
-	fun preDestroy() {
-		redisServer.stop()
-	}
+    @PreDestroy
+    fun preDestroy() {
+        redisServer.stop()
+    }
 }

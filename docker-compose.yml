@@ -26,7 +26,7 @@ services:
     container_name: redis
     volumes:
       - ./data/redis:/data
-    command: redis-server --requirepass password --port 6379
+    command: redis-server --port 6379
     ports:
       - "6379:6379"
     networks:
