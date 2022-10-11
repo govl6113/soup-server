@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface GroupJpaRepository : JpaRepository<Group, String> {
 
-    fun findByNameContaining(name: String, pageable: Pageable): Page<Group>
+    fun findByNameContaining(name: String, pageable: Pageable): List<Group>
 
 }

@@ -18,7 +18,7 @@ class MemberRepositoryImpl(
         return memberRepository.save(member)
     }
 
-    override fun searchMember(name: String, pageable: Pageable): Page<Member> {
-        return memberRepository.findByNameContaining(name, pageable)
+    override fun searchMember(name: String, pageable: Pageable): List<Member> {
+        return memberRepository.findByNicknameContaining(name, pageable)
     }
 }

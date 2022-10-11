@@ -15,5 +15,5 @@ interface GroupRepository {
 
     fun getList(condition: ListGroupRequest, pageable: Pageable): List<Group>
 
-    fun searchGroup(name: String, pageable: Pageable): Page<Group>
+    fun searchGroup(name: String, pageable: Pageable): List<Group>
 }

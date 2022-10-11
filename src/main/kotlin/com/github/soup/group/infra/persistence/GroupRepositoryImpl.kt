@@ -65,7 +65,7 @@ class GroupRepositoryImpl(
         else null
     }
 
-    override fun searchGroup(name: String, pageable: Pageable): Page<Group> {
+    override fun searchGroup(name: String, pageable: Pageable): List<Group> {
         return groupRepository.findByNameContaining(name, pageable)
     }
 

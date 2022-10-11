@@ -4,11 +4,9 @@ import com.github.soup.group.domain.Group
 import com.github.soup.group.infra.persistence.GroupRepositoryImpl
 import com.github.soup.member.domain.Member
 import com.github.soup.member.infra.persistence.MemberRepositoryImpl
-import com.github.soup.search.application.service.SearchService
-import com.github.soup.search.infra.http.request.SearchRequest
-import com.github.soup.search.infra.http.request.SearchType
-import com.github.soup.search.infra.http.response.SearchResponse
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,17 +17,19 @@ class SearchServiceImpl(
     private val memberRepository: MemberRepositoryImpl,
 ) : SearchService {
 
-    override fun searchGroup(request: SearchRequest): Page<Group> {
+    override fun searchGroup(page: Int, keyword: String): List<Group> {
+        val pageable: Pageable = PageRequest.of(page-1, 10)
         return groupRepository.searchGroup(
-            name = request.keyword,
-            pageable = request.pageable
+            name = keyword,
+            pageable = pageable
         )
     }
 
-    override fun searchUser(request: SearchRequest): Page<Member> {
+    override fun searchUser(page: Int, keyword: String): List<Member> {
+        val pageable: Pageable = PageRequest.of(page-1, 10)
         return  memberRepository.searchMember(
-            name = request.keyword,
-            pageable = request.pageable
+            name = keyword,
+            pageable = pageable
         )
     }
 }

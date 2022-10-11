@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface MemberJpaRepository : JpaRepository<Member, String> {
 
-    fun findByNameContaining(name: String, pageable: Pageable): Page<Member>
+    fun findByNicknameContaining(name: String, pageable: Pageable): List<Member>
 }

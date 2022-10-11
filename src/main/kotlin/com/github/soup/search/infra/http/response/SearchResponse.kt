@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page
 
 data class SearchResponse(
 
-    val groupList: Page<Group>?,
+    val groupList: List<Group>?,
 
-    val memberList: Page<Member>?
+    val memberList: List<Member>?
 
     )
