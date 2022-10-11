@@ -21,7 +21,6 @@ class EmbeddedRedisConfig(
     fun postConstruct() {
         redisServer = RedisServer.builder()
             .port(port)
-            .setting("maxmemory $maxMemory")
             .build()
         redisServer.start()
     }

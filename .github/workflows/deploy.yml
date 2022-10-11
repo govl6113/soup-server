@@ -77,4 +77,11 @@ jobs:
           docker run -d -p 8080:8080 \
           --net soup \
           --name ${{ env.DOCKER_NAME }} \
-          --restart always ${{ env.DOCKER_IMAGE }}:latest
+          --restart always ${{ env.DOCKER_IMAGE }}:latest \
+          --STORAGE_ENDPOINT=${{ secrets.STORAGE_ENDPOINT }} \
+          --STORAGE_ACCESSKEY=${{ secrets.STORAGE_ACCESSKEY }} \
+          --STORAGE_SECRETKEY=${{ secrets.STORAGE_SECRETKEY }} \
+          --STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }} \
+          --JWT_SECRET=${{ secrets.JWT.SECRET }}
+          --JWT_EXPIRED_ACCESS=${{ secrets.JWT_EXPIRED_ACCESS }}
+          --JWT_EXPIRED_REFRESH=${{ secrets.JWT_EXPIRED_REFRESH }}
