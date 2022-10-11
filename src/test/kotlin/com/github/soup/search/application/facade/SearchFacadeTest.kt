@@ -1,10 +1,10 @@
 package com.github.soup.search.application.facade
 
+import EmbeddedRedisConfig
 import com.github.soup.auth.application.auth.AuthServiceImpl
 import com.github.soup.auth.application.token.TokenServiceImpl
 import com.github.soup.auth.domain.auth.AuthType
 import com.github.soup.auth.infra.http.request.SignUpRequest
-import com.github.soup.config.EmbeddedRedisConfig
 import com.github.soup.group.application.facade.GroupFacadeImpl
 import com.github.soup.group.domain.GroupScopeEnum
 import com.github.soup.group.domain.GroupTypeEnum
@@ -55,7 +55,6 @@ class SearchFacadeTest(
         )
 
         val member1 = memberRepository.getById(tokenService.parse(member1Response.accessToken))
-        val member2 = memberRepository.getById(tokenService.parse(member2Response.accessToken))
 
         groupFacade.create(
             memberId = member1?.id!!,
@@ -71,10 +70,17 @@ class SearchFacadeTest(
             )
         )
 
-        val searchedGroups = searchFacade.searchGroupAndUser(type = SearchType.GROUP, page = 1, keyword = "group").groupList
-        val searchedMembers = searchFacade.searchGroupAndUser(type = SearchType.MEMBER, page = 1, keyword = "name").memberList
+        val searchedGroups =
+            searchFacade.searchGroupAndUser(type = SearchType.GROUP, page = 1, keyword = "group").groupList
+        val searchedMembers =
+            searchFacade.searchGroupAndUser(type = SearchType.MEMBER, page = 1, keyword = "name").memberList
 
-       assertThat(searchedGroups?.size).isEqualTo(1)
-       assertThat(searchedMembers?.size).isEqualTo(2)
+        if (searchedMembers != null) {
+            for (i in searchedMembers) {
+                println("이학진 " + i.name)
+            }
+        }
+        assertThat(searchedGroups?.size).isEqualTo(1)
+        assertThat(searchedMembers?.size).isEqualTo(2)
     }
 }

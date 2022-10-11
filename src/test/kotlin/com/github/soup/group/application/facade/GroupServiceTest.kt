@@ -1,10 +1,10 @@
 package com.github.soup.group.application.facade
 
+import EmbeddedRedisConfig
 import com.github.soup.auth.application.auth.AuthServiceImpl
 import com.github.soup.auth.application.token.TokenServiceImpl
 import com.github.soup.auth.domain.auth.AuthType
 import com.github.soup.auth.infra.http.request.SignUpRequest
-import com.github.soup.config.EmbeddedRedisConfig
 import com.github.soup.group.domain.GroupScopeEnum
 import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.domain.GroupTypeEnum
@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import org.springframework.test.annotation.Rollback
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
@@ -284,7 +283,6 @@ internal class GroupServiceTest(
 
     @Test
     @DisplayName("참여 그룹을 조회할 수 있어요.")
-    @Rollback(value = false)
     fun joinGroups() {
         val response = authService.create(
             SignUpRequest(
