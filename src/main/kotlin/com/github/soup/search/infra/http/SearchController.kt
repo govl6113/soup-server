@@ -15,8 +15,8 @@ class SearchController(
     fun search(
         @PathVariable("type") type: SearchType,
         @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
-        @RequestParam(value = "keyword", required = true)  keyword: String,
-    ): ResponseEntity<SearchResponse> {
+        @RequestParam(value = "keyword", required = true) keyword: String
+    ): ResponseEntity<List<SearchResponse>> {
         return ResponseEntity.ok().body(
             searchFacade.searchGroupAndUser(type, page, keyword)
         )

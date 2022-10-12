@@ -30,7 +30,7 @@ jwt:
     refresh: 604800000
 
 storage:
-  bucketName: bucket
+  bucket: bucket
   endpoint: http://localhost:9000
-  accessKey: soup
-  secretKey: password
+  access-key: soup
+  secret-key: password

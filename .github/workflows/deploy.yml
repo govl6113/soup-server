@@ -79,8 +79,8 @@ jobs:
           --name ${{ env.DOCKER_NAME }} \
           --restart always ${{ env.DOCKER_IMAGE }}:latest \
           --STORAGE_ENDPOINT=${{ secrets.STORAGE_ENDPOINT }} \
-          --STORAGE_ACCESSKEY=${{ secrets.STORAGE_ACCESSKEY }} \
-          --STORAGE_SECRETKEY=${{ secrets.STORAGE_SECRETKEY }} \
+          --STORAGE_ACCESS_KEY=${{ secrets.STORAGE_ACCESS_KEY }} \
+          --STORAGE_SECRET_KEY=${{ secrets.STORAGE_SECRET_KEY }} \
           --STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }} \
           --JWT_SECRET=${{ secrets.JWT.SECRET }}
           --JWT_EXPIRED_ACCESS=${{ secrets.JWT_EXPIRED_ACCESS }}

@@ -5,12 +5,12 @@ import com.github.soup.member.infra.http.response.MemberResponse
 
 sealed class SearchResponse {
 
-    data class GroupList(
-        val groups: List<GroupResponse>
+    data class Group(
+        val group: GroupResponse
     ) : SearchResponse()
 
-    data class MemberList(
-        val members: List<MemberResponse>
+    data class Member(
+        val member: MemberResponse
     ) : SearchResponse()
 
 }

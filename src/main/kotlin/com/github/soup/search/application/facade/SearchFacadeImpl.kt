@@ -12,17 +12,17 @@ class SearchFacadeImpl(
     private val SearchService: SearchServiceImpl
 ) : SearchFacade {
 
-    override fun searchGroupAndUser(type: SearchType, page: Int, keyword: String): SearchResponse {
+    override fun searchGroupAndUser(type: SearchType, page: Int, keyword: String): List<SearchResponse> {
         return when (type) {
             SearchType.GROUP -> {
-                SearchResponse.GroupList(
-                    SearchService.searchGroup(page, keyword).map { it.toResponse() }
-                )
+                SearchService.searchGroup(page, keyword).map {
+                    SearchResponse.Group(it.toResponse())
+                }
             }
             SearchType.MEMBER -> {
-                SearchResponse.MemberList(
-                    SearchService.searchUser(page, keyword).map { it.toResponse() }
-                )
+                SearchService.searchUser(page, keyword).map {
+                    SearchResponse.Member(it.toResponse())
+                }
             }
         }
     }

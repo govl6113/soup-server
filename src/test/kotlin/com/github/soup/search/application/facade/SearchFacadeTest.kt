@@ -35,32 +35,32 @@ class SearchFacadeTest(
     @Test
     @DisplayName("그룹과 멤버 닉네임을 검색할 수 있어요.")
     fun search() {
-        val member1Response = authService.create(
+        val member = authService.create(
             SignUpRequest(
                 type = AuthType.KAKAO,
                 token = UUID.randomUUID().toString(),
-                name = "name1",
+                name = "test_name",
                 nickname = "test_nickname",
                 sex = SexType.MALE
             )
         )
-        val member2Response = authService.create(
+        authService.create(
             SignUpRequest(
                 type = AuthType.KAKAO,
                 token = UUID.randomUUID().toString(),
-                name = "name2",
+                name = "test_name",
                 nickname = "test_nickname",
                 sex = SexType.MALE
             )
         )
 
-        val member1 = memberRepository.getById(tokenService.parse(member1Response.accessToken))
+        val manager = memberRepository.getById(tokenService.parse(member.accessToken))
 
         groupFacade.create(
-            memberId = member1?.id!!,
+            memberId = manager?.id!!,
             request = CreateGroupRequest(
-                name = "group",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -71,16 +71,11 @@ class SearchFacadeTest(
         )
 
         val searchedGroups =
-            searchFacade.searchGroupAndUser(type = SearchType.GROUP, page = 1, keyword = "group").groupList
+            searchFacade.searchGroupAndUser(type = SearchType.GROUP, page = 1, keyword = "group")
         val searchedMembers =
-            searchFacade.searchGroupAndUser(type = SearchType.MEMBER, page = 1, keyword = "name").memberList
+            searchFacade.searchGroupAndUser(type = SearchType.MEMBER, page = 1, keyword = "name")
 
-        if (searchedMembers != null) {
-            for (i in searchedMembers) {
-                println("이학진 " + i.name)
-            }
-        }
-        assertThat(searchedGroups?.size).isEqualTo(1)
-        assertThat(searchedMembers?.size).isEqualTo(2)
+        assertThat(searchedGroups.size).isEqualTo(1)
+        assertThat(searchedMembers.size).isEqualTo(2)
     }
 }

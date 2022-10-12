@@ -8,7 +8,6 @@ import com.github.soup.auth.infra.http.request.SignUpRequest
 import com.github.soup.group.domain.GroupScopeEnum
 import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.domain.GroupTypeEnum
-import com.github.soup.group.exception.NotFoundGroupException
 import com.github.soup.group.infra.http.request.CreateGroupRequest
 import com.github.soup.group.infra.http.request.ListGroupRequest
 import com.github.soup.group.infra.http.request.UpdateGroupRequest
@@ -18,7 +17,6 @@ import com.github.soup.member.domain.SexType
 import com.github.soup.member.infra.persistence.MemberRepositoryImpl
 import kr.soupio.soup.group.entities.GroupRecruitmentEnum
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -55,8 +53,8 @@ internal class GroupServiceTest(
         val group = groupFacade.create(
             memberId = member?.id!!,
             request = CreateGroupRequest(
-                name = "그룹",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -88,8 +86,8 @@ internal class GroupServiceTest(
         val group = groupFacade.create(
             memberId = member?.id!!,
             request = CreateGroupRequest(
-                name = "그룹",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -104,7 +102,7 @@ internal class GroupServiceTest(
             group.id,
             UpdateGroupRequest(
                 image = null,
-                name = "updated group",
+                name = "updated_group",
                 content = group.content,
                 isOnline = group.isOnline,
                 scope = group.scope,
@@ -115,11 +113,11 @@ internal class GroupServiceTest(
 
         assertThat(member).isInstanceOf(Member::class.java)
         assertThat(group).isInstanceOf(GroupResponse::class.java)
-        assertThat(updatedGroup.name).isEqualTo("updated group")
+        assertThat(updatedGroup.name).isEqualTo("updated_group")
     }
 
     @Test
-    @DisplayName("그룹을 삭제할 수 있어요.")
+    @DisplayName("그룹의 진행 상황을 종료시킬 수 있어요.")
     fun delete() {
         val response = authService.create(
             SignUpRequest(
@@ -136,8 +134,8 @@ internal class GroupServiceTest(
         val group = groupFacade.create(
             memberId = member?.id!!,
             request = CreateGroupRequest(
-                name = "그룹",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -150,11 +148,10 @@ internal class GroupServiceTest(
         assertThat(member).isInstanceOf(Member::class.java)
         assertThat(group).isInstanceOf(GroupResponse::class.java)
 
-        groupFacade.delete(member.id!!, group.id)
+        groupFacade.finish(member.id!!, group.id)
 
-        Assertions.assertThrows(NotFoundGroupException::class.java) {
-            groupFacade.get(member.id!!, group.id)
-        }
+        val finishedGroup = groupFacade.get(member.id!!, group.id)
+        assertThat(finishedGroup.status).isEqualTo(GroupStatusEnum.FINISH)
     }
 
     @Test
@@ -172,11 +169,11 @@ internal class GroupServiceTest(
 
         val member = memberRepository.getById(tokenService.parse(response.accessToken))
 
-        val group1 = groupFacade.create(
+        groupFacade.create(
             memberId = member?.id!!,
             request = CreateGroupRequest(
-                name = "그룹1",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -185,11 +182,11 @@ internal class GroupServiceTest(
                 startMinute = 30
             )
         )
-        val group2 = groupFacade.create(
+        groupFacade.create(
             memberId = member.id!!,
             request = CreateGroupRequest(
-                name = "그룹2",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -200,8 +197,6 @@ internal class GroupServiceTest(
         )
 
         assertThat(member).isInstanceOf(Member::class.java)
-        assertThat(group1).isInstanceOf(GroupResponse::class.java)
-        assertThat(group2).isInstanceOf(GroupResponse::class.java)
 
         val allGroups = groupFacade.allGroups(
             ListGroupRequest(
@@ -231,8 +226,8 @@ internal class GroupServiceTest(
         groupFacade.create(
             memberId = member?.id!!,
             request = CreateGroupRequest(
-                name = "그룹1",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -244,8 +239,8 @@ internal class GroupServiceTest(
         groupFacade.create(
             memberId = member.id!!,
             request = CreateGroupRequest(
-                name = "그룹2",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -257,8 +252,8 @@ internal class GroupServiceTest(
         groupFacade.create(
             memberId = member.id!!,
             request = CreateGroupRequest(
-                name = "그룹3",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = false,
                 scope = GroupScopeEnum.PUBLIC,
@@ -299,8 +294,8 @@ internal class GroupServiceTest(
         groupFacade.create(
             memberId = member?.id!!,
             request = CreateGroupRequest(
-                name = "그룹1",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -312,8 +307,8 @@ internal class GroupServiceTest(
         groupFacade.create(
             memberId = member.id!!,
             request = CreateGroupRequest(
-                name = "그룹2",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = true,
                 scope = GroupScopeEnum.PUBLIC,
@@ -325,8 +320,8 @@ internal class GroupServiceTest(
         groupFacade.create(
             memberId = member.id!!,
             request = CreateGroupRequest(
-                name = "그룹3",
-                content = "그룹설명",
+                name = "test_group",
+                content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 isOnline = false,
                 scope = GroupScopeEnum.PUBLIC,
