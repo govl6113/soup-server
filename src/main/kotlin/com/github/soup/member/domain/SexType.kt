@@ -1,6 +1,6 @@
 package com.github.soup.member.domain
 
 enum class SexType {
-	MALE,
-	FEMAIL
+    MALE,
+    FEMALE
 }

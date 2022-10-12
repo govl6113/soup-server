@@ -1,13 +1,14 @@
 package com.github.soup.group.infra.persistence
 
+import com.github.soup.file.domain.QFile.file
 import com.github.soup.group.domain.Group
 import com.github.soup.group.domain.GroupRepository
 import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.domain.QGroup.group
 import com.github.soup.group.infra.http.request.ListGroupRequest
+import com.github.soup.member.domain.QMember.member
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -33,6 +34,8 @@ class GroupRepositoryImpl(
     override fun getList(condition: ListGroupRequest, pageable: Pageable): List<Group> {
         return queryFactory
             .selectFrom(group)
+            .leftJoin(group.manager, member).fetchJoin()
+            .leftJoin(group.image, file).fetchJoin()
             .where(
                 group.type.eq(condition.type),
                 stateEq(condition.status),
@@ -42,6 +45,7 @@ class GroupRepositoryImpl(
             )
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
+            .orderBy(group.updatedAt.desc())
             .fetch()
     }
 

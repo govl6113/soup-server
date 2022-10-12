@@ -14,6 +14,7 @@ import javax.persistence.*
 @Table(name = "`group`")
 class Group(
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     var type: GroupTypeEnum,
 
     @Column(nullable = false)

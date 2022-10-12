@@ -10,15 +10,19 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class SearchFacadeImpl(
     private val SearchService: SearchServiceImpl
-): SearchFacade {
+) : SearchFacade {
 
     override fun searchGroupAndUser(type: SearchType, page: Int, keyword: String): SearchResponse {
         return when (type) {
             SearchType.GROUP -> {
-                SearchResponse(groupList = SearchService.searchGroup(page, keyword), memberList = null)
+                SearchResponse.GroupList(
+                    SearchService.searchGroup(page, keyword).map { it.toResponse() }
+                )
             }
             SearchType.MEMBER -> {
-                SearchResponse(groupList = null, memberList = SearchService.searchUser(page, keyword))
+                SearchResponse.MemberList(
+                    SearchService.searchUser(page, keyword).map { it.toResponse() }
+                )
             }
         }
     }

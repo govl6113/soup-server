@@ -18,18 +18,13 @@ class File(
     @Column(name = "file_key", nullable = false)
     var key: String,
 
-    @Enumerated(EnumType.STRING)
-    var type: FileType
+    ) : Core() {
 
-) : Core() {
-
-    @Value("\${storage.endpoint}")
-    private val host: String = ""
+    val host: String = "133.186.146.107:9001"
 
     constructor(uploader: Member, type: FileType, mime: String) : this(
         uploader = uploader,
         key = "$type/${UUID.randomUUID()}.$mime",
-        type = type
     )
 
     fun toResponse(): FileResponse {
@@ -37,7 +32,7 @@ class File(
             id!!,
             createdAt!!,
             updatedAt!!,
-            "$host/$type/$key"
+            "$host/$key"
         )
     }
 }

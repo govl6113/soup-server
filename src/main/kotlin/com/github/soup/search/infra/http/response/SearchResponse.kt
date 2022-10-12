@@ -1,13 +1,16 @@
 package com.github.soup.search.infra.http.response
 
-import com.github.soup.group.domain.Group
-import com.github.soup.member.domain.Member
-import org.springframework.data.domain.Page
+import com.github.soup.group.infra.http.response.GroupResponse
+import com.github.soup.member.infra.http.response.MemberResponse
 
-data class SearchResponse(
+sealed class SearchResponse {
 
-    val groupList: List<Group>?,
+    data class GroupList(
+        val groups: List<GroupResponse>
+    ) : SearchResponse()
 
-    val memberList: List<Member>?
+    data class MemberList(
+        val members: List<MemberResponse>
+    ) : SearchResponse()
 
-    )
+}

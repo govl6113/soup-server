@@ -15,7 +15,7 @@ interface GroupFacade {
 
     fun get(memberId: String, groupId: String): GroupResponse
 
-    fun delete(memberId: String, groupId: String): Boolean
+    fun finish(memberId: String, groupId: String): GroupResponse
 
     fun allGroups(request: ListGroupRequest): List<GroupResponse>
 

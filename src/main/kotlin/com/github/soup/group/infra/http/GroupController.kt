@@ -20,10 +20,11 @@ import javax.validation.Valid
 class GroupController(
     private val groupFacade: GroupFacadeImpl
 ) {
+    @ApiOperation(value = "그룹 생성")
     @PostMapping("/new")
     fun creatGroup(
         @ApiIgnore authentication: Authentication,
-        @RequestBody @Valid request: CreateGroupRequest
+        @Valid request: CreateGroupRequest
     ): ResponseEntity<GroupResponse> =
         ResponseEntity.ok().body(
             groupFacade.create(
@@ -32,7 +33,7 @@ class GroupController(
             )
         )
 
-
+    @ApiOperation(value = "그룹 조회")
     @GetMapping("/{groupId}")
     fun getGroup(
         @ApiIgnore authentication: Authentication,
@@ -45,11 +46,12 @@ class GroupController(
             )
         )
 
+    @ApiOperation(value = "그룹 수정")
     @PutMapping("/{groupId}")
     fun updateGroup(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String,
-        @RequestBody @Valid request: UpdateGroupRequest
+        @Valid request: UpdateGroupRequest
     ): ResponseEntity<GroupResponse> =
         ResponseEntity.ok().body(
             groupFacade.update(
@@ -59,13 +61,14 @@ class GroupController(
             )
         )
 
-    @DeleteMapping("/{groupId}")
-    fun deleteGroup(
+    @ApiOperation(value = "그룹 상태 종료")
+    @PatchMapping("/{groupId}")
+    fun finishGroup(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String,
-    ): ResponseEntity<Boolean> =
+    ): ResponseEntity<GroupResponse> =
         ResponseEntity.ok().body(
-            groupFacade.delete(
+            groupFacade.finish(
                 authentication.name,
                 groupId
             )
@@ -76,10 +79,10 @@ class GroupController(
     fun allGroup(
         @PathVariable("type") type: GroupTypeEnum,
         @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
-        @RequestParam(value = "status", required = false) status: GroupStatusEnum,
-        @RequestParam(value = "isOnline", required = false) isOnline: Boolean,
-        @RequestParam(value = "minPersonnel", required = false) minPersonnel: Int,
-        @RequestParam(value = "maxPersonnel", required = false) maxPersonnel: Int,
+        @RequestParam(value = "status", required = false) status: GroupStatusEnum?,
+        @RequestParam(value = "isOnline", required = false) isOnline: Boolean?,
+        @RequestParam(value = "minPersonnel", required = false) minPersonnel: Int?,
+        @RequestParam(value = "maxPersonnel", required = false) maxPersonnel: Int?,
     ): ResponseEntity<List<GroupResponse>> =
         ResponseEntity.ok().body(
             groupFacade.allGroups(

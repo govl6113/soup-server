@@ -19,7 +19,6 @@ data class CreateGroupRequest(
 
     @NotEmpty
     val content: String,
-    var manager: Member? = null,
 
     @NotNull
     val type: GroupTypeEnum,

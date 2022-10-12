@@ -87,7 +87,7 @@ internal class AuthServiceTest(
                     token = token,
                     name = "other_test_name",
                     nickname = "other_test_nickname",
-                    sex = SexType.FEMAIL
+                    sex = SexType.FEMALE
                 )
             )
         }

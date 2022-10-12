@@ -30,9 +30,8 @@ class GroupFacadeImpl(
     override fun create(memberId: String, request: CreateGroupRequest): GroupResponse {
         val manager: Member = memberService.getByMemberId(memberId)
 
-        val file: File? = null
-        if (request.image != null) {
-            fileFacade.upload(memberId = memberId, type = FileType.GROUP, image = request.image)
+        val file: File? = request.image?.let {
+            fileFacade.upload(memberId = memberId, type = FileType.GROUP, image = it)
         }
         val group = groupService.save(
             request.toEntity(manager = manager, image = file)
@@ -56,15 +55,14 @@ class GroupFacadeImpl(
     }
 
     @Transactional
-    override fun delete(memberId: String, groupId: String): Boolean {
+    override fun finish(memberId: String, groupId: String): GroupResponse {
         val member: Member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(groupId)
         if (member != group.manager) {
             throw NotFoundManagerAuthorityException()
         }
-
-        groupService.delete(group)
-        return true
+        group.status = GroupStatusEnum.FINISH
+        return group.toResponse()
     }
 
     override fun allGroups(request: ListGroupRequest): List<GroupResponse> {

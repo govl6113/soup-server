@@ -1,5 +1,6 @@
 package com.github.soup.group.participant.infra.persistence
 
+import com.github.soup.file.domain.QFile.file
 import com.github.soup.group.domain.Group
 import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.domain.QGroup.group
@@ -34,8 +35,9 @@ class ParticipantRepositoryImpl(
         return queryFactory
             .select(participant.group)
             .from(participant)
-            .join(participant.group, group)
-            .on(
+            .leftJoin(participant.group, group)
+            .leftJoin(group.image, file)
+            .where(
                 participant.member.eq(member),
                 stateEq(status)
             )
