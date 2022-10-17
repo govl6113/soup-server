@@ -20,7 +20,13 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class AuthServiceImpl(private val tokenService: TokenServiceImpl, private val oAuthService: OAuthServiceImpl, private val authRepository: AuthRepositoryImpl, private val memberRepository: MemberRepositoryImpl, private val fileFacade: FileFacadeImpl) : AuthService {
+class AuthServiceImpl(
+	private val tokenService: TokenServiceImpl,
+	private val oAuthService: OAuthServiceImpl,
+	private val authRepository: AuthRepositoryImpl,
+	private val memberRepository: MemberRepositoryImpl,
+	private val fileFacade: FileFacadeImpl
+) : AuthService {
 	@Transactional
 	override fun login(request: SignInRequest): TokenResponse {
 		val auth = authRepository.getByAuthTypeAndClientId(
