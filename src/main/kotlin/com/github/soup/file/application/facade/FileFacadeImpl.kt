@@ -14,39 +14,34 @@ import org.springframework.web.multipart.MultipartFile
 @Component
 @Transactional
 class FileFacadeImpl(
-    private val fileService: FileServiceImpl,
-    private val storageService: StorageServiceImpl,
-    private val memberService: MemberServiceImpl
+	private val fileService: FileServiceImpl,
+	private val storageService: StorageServiceImpl,
+	private val memberService: MemberServiceImpl
 ) : FileFacade {
 
-    override fun upload(memberId: String, type: FileType, image: MultipartFile): File {
-        val member: Member = memberService.getByMemberId(memberId)
+	override fun upload(memberId: String, type: FileType, image: MultipartFile): File {
+		val member: Member = memberService.getByMemberId(memberId)
+		val file: File = fileService.save(
+			uploader = member,
+			type = type,
+			image = image
+		)
 
-        val file: File = fileService.save(
-            uploader = member,
-            type = type,
-            image = image
-        )
+		if (!storageService.upload(key = file.key, image = image)) {
+			throw StorageUploadException()
+		}
 
-        val uploadResult: Boolean = storageService.upload(
-            key = file.key,
-            image = image
-        )
-        if(!uploadResult){
-            throw StorageUploadException()
-        }
+		return file
+	}
 
-        return file
-    }
+	override fun uploads(memberId: String, type: FileType, images: List<MultipartFile>): List<File> {
+		val member: Member = memberService.getByMemberId(memberId)
 
-    override fun uploads(memberId: String, type: FileType, images: List<MultipartFile>): List<File> {
-        val member: Member = memberService.getByMemberId(memberId)
-
-        return images.map { image ->
-            val file: File = fileService.save(member, type, image)
-            storageService.upload(key = file.key, image = image)
-            file
-        }
-    }
+		return images.map { image ->
+			val file: File = fileService.save(member, type, image)
+			storageService.upload(key = file.key, image = image)
+			file
+		}
+	}
 
 }

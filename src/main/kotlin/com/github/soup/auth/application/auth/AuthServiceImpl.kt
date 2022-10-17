@@ -20,18 +20,15 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class AuthServiceImpl(
-	private val tokenService: TokenServiceImpl,
-	private val oAuthService: OAuthServiceImpl,
-	private val authRepository: AuthRepositoryImpl,
-	private val memberRepository: MemberRepositoryImpl,
-	private val fileFacade: FileFacadeImpl
-) : AuthService {
+class AuthServiceImpl(private val tokenService: TokenServiceImpl, private val oAuthService: OAuthServiceImpl, private val authRepository: AuthRepositoryImpl, private val memberRepository: MemberRepositoryImpl, private val fileFacade: FileFacadeImpl) : AuthService {
 	@Transactional
 	override fun login(request: SignInRequest): TokenResponse {
 		val auth = authRepository.getByAuthTypeAndClientId(
 			request.type,
-			oAuthService.getClientId(request.type, request.token)
+			oAuthService.getClientId(
+				request.type,
+				request.token
+			)
 		) ?: throw NotFoundAuthException()
 
 		return tokenService.create(auth).toResponse()
@@ -53,14 +50,12 @@ class AuthServiceImpl(
 			)
 		)
 
-		if(request.profileImage!=null){
-			member.profileImage =
-				fileFacade.upload(
-					memberId = member.id!!,
-					type = FileType.PROFILE,
-					image = request.profileImage
-				)
-
+		if (request.profileImage != null) {
+			member.profileImage = fileFacade.upload(
+				memberId = member.id!!,
+				type = FileType.PROFILE,
+				image = request.profileImage
+			)
 		}
 
 		val auth = authRepository.save(
@@ -80,8 +75,9 @@ class AuthServiceImpl(
 			throw InvalidTokenException()
 		}
 
-		val auth = authRepository.getByMemberId(tokenService.parse(request.refreshToken))
-			?: throw NotFoundAuthException()
+		val auth = authRepository.getByMemberId(
+			tokenService.parse(request.refreshToken)
+		) ?: throw NotFoundAuthException()
 
 		return tokenService.create(auth).toResponse()
 	}
