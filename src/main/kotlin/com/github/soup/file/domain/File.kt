@@ -3,7 +3,6 @@ package com.github.soup.file.domain
 import com.github.soup.common.domain.Core
 import com.github.soup.file.infra.http.response.FileResponse
 import com.github.soup.member.domain.Member
-import org.springframework.beans.factory.annotation.Value
 import java.util.*
 import javax.persistence.*
 
@@ -18,18 +17,13 @@ class File(
     @Column(name = "file_key", nullable = false)
     var key: String,
 
-    @Enumerated(EnumType.STRING)
-    var type: FileType
+    ) : Core() {
 
-) : Core() {
-
-    @Value("\${storage.endpoint}")
-    private val host: String = ""
+    val host: String = "133.186.146.107:9001"
 
     constructor(uploader: Member, type: FileType, mime: String) : this(
         uploader = uploader,
         key = "$type/${UUID.randomUUID()}.$mime",
-        type = type
     )
 
     fun toResponse(): FileResponse {
@@ -37,7 +31,7 @@ class File(
             id!!,
             createdAt!!,
             updatedAt!!,
-            "$host/$type/$key"
+            "$host/$key"
         )
     }
 }

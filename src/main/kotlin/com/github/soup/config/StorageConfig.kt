@@ -11,10 +11,10 @@ class StorageConfig {
     @Value("\${storage.endpoint}")
     private val endpoint: String? = null
 
-    @Value("\${storage.accessKey}")
+    @Value("\${storage.access-key}")
     private val accessKey: String? = null
 
-    @Value("\${storage.secretKey}")
+    @Value("\${storage.secret-key}")
     private val secretKey: String? = null
 
     @Bean

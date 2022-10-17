@@ -8,9 +8,11 @@ import com.github.soup.file.exception.StorageUploadException
 import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 
 @Component
+@Transactional
 class FileFacadeImpl(
     private val fileService: FileServiceImpl,
     private val storageService: StorageServiceImpl,
