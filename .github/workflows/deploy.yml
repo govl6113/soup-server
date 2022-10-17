@@ -82,6 +82,6 @@ jobs:
           --STORAGE_ACCESS_KEY=${{ secrets.STORAGE_ACCESS_KEY }} \
           --STORAGE_SECRET_KEY=${{ secrets.STORAGE_SECRET_KEY }} \
           --STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }} \
-          --JWT_SECRET=${{ secrets.JWT.SECRET }}
-          --JWT_EXPIRED_ACCESS=${{ secrets.JWT_EXPIRED_ACCESS }}
+          --JWT_SECRET=${{ secrets.JWT.SECRET }} \
+          --JWT_EXPIRED_ACCESS=${{ secrets.JWT_EXPIRED_ACCESS }} \
           --JWT_EXPIRED_REFRESH=${{ secrets.JWT_EXPIRED_REFRESH }}
