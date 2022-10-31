@@ -1,6 +1,6 @@
 package com.github.soup.auth.application.auth
 
-import com.github.soup.auth.application.oauth.OAuthServiceImpl
+import com.github.soup.auth.application.oauth.OAuthService
 import com.github.soup.auth.application.token.TokenServiceImpl
 import com.github.soup.auth.domain.auth.Auth
 import com.github.soup.auth.exceptions.AlreadyExistingAuthException
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class AuthServiceImpl(
 	private val tokenService: TokenServiceImpl,
-	private val oAuthService: OAuthServiceImpl,
+	private val oAuthService: OAuthService,
 	private val authRepository: AuthRepositoryImpl,
 	private val memberRepository: MemberRepositoryImpl,
 	private val fileFacade: FileFacadeImpl
