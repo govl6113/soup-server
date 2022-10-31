@@ -51,7 +51,9 @@ class GroupFacadeImpl(
     }
 
     override fun get(memberId: String, groupId: String): GroupResponse {
-        return groupService.getById(groupId).toResponse()
+        val group = groupService.getById(groupId).toResponse()
+        group.views += 1
+        return group
     }
 
     @Transactional
