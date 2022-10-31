@@ -3,6 +3,7 @@ package com.github.soup.group.participant.application.facade
 import com.github.soup.group.application.service.GroupServiceImpl
 import com.github.soup.group.domain.Group
 import com.github.soup.group.participant.application.service.ParticipantServiceImpl
+import com.github.soup.group.participant.exception.NotParticipantException
 import com.github.soup.group.participant.infra.http.request.CreateParticipantRequest
 import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
@@ -41,5 +42,18 @@ class ParticipantFacadeImpl(
             )
         }
         return true
+    }
+
+    @Transactional
+    override fun isParticipant(memberId: String, groupId: String):Boolean{
+        val member: Member = memberService.getByMemberId(memberId)
+        val group: Group = groupService.getById(groupId)
+
+        return try {
+            participantService.checkParticipant(member, group)
+            true
+        }catch (e: NotParticipantException){
+            false
+        }
     }
 }
