@@ -58,7 +58,7 @@ class PostController(
         )
 
     @ApiOperation(value = "게시글 삭제")
-    @GetMapping("/{postId}")
+    @DeleteMapping("/{postId}")
     fun deletePost(
         @ApiIgnore authentication: Authentication,
         @PathVariable("postId") postId: String,
