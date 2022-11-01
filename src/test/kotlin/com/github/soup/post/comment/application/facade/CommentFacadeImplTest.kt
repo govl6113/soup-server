@@ -64,7 +64,7 @@ internal class CommentFacadeImplTest(
                 name = "test_group",
                 content = "test_description",
                 type = GroupTypeEnum.PROJECT,
-                online = true,
+                online = true, personnel = 3,
                 scope = GroupScopeEnum.PUBLIC,
                 recruitment = GroupRecruitmentEnum.FIRSTCOME,
                 startHour = 13,
@@ -115,7 +115,7 @@ internal class CommentFacadeImplTest(
                 name = "test_group",
                 content = "test_description",
                 type = GroupTypeEnum.PROJECT,
-                online = true,
+                online = true, personnel = 3,
                 scope = GroupScopeEnum.PUBLIC,
                 recruitment = GroupRecruitmentEnum.FIRSTCOME,
                 startHour = 13,
@@ -186,7 +186,7 @@ internal class CommentFacadeImplTest(
                 name = "test_group",
                 content = "test_description",
                 type = GroupTypeEnum.PROJECT,
-                online = true,
+                online = true, personnel = 3,
                 scope = GroupScopeEnum.PUBLIC,
                 recruitment = GroupRecruitmentEnum.FIRSTCOME,
                 startHour = 13,
@@ -244,7 +244,7 @@ internal class CommentFacadeImplTest(
                 name = "test_group",
                 content = "test_description",
                 type = GroupTypeEnum.PROJECT,
-                online = true,
+                online = true, personnel = 3,
                 scope = GroupScopeEnum.PUBLIC,
                 recruitment = GroupRecruitmentEnum.FIRSTCOME,
                 startHour = 13,
@@ -293,7 +293,8 @@ internal class CommentFacadeImplTest(
             memberId = member.id!!,
             commentId = comment.id
         )
-
+        em.clear()
+        
         assertThrows(NotFoundCommentException::class.java) {
             commentFacade.get(childComment.id)
         }
@@ -320,7 +321,7 @@ internal class CommentFacadeImplTest(
                 name = "test_group",
                 content = "test_description",
                 type = GroupTypeEnum.PROJECT,
-                online = true,
+                online = true, personnel = 3,
                 scope = GroupScopeEnum.PUBLIC,
                 recruitment = GroupRecruitmentEnum.FIRSTCOME,
                 startHour = 13,
@@ -406,7 +407,7 @@ internal class CommentFacadeImplTest(
                 name = "test_group",
                 content = "test_description",
                 type = GroupTypeEnum.PROJECT,
-                online = true,
+                online = true, personnel = 3,
                 scope = GroupScopeEnum.PUBLIC,
                 recruitment = GroupRecruitmentEnum.FIRSTCOME,
                 startHour = 13,
