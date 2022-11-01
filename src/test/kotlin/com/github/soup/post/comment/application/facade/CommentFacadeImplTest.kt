@@ -293,7 +293,8 @@ internal class CommentFacadeImplTest(
             memberId = member.id!!,
             commentId = comment.id
         )
-
+        em.clear()
+        
         assertThrows(NotFoundCommentException::class.java) {
             commentFacade.get(childComment.id)
         }
