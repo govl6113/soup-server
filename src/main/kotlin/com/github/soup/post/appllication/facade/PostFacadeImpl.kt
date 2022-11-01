@@ -6,6 +6,7 @@ import com.github.soup.group.participant.application.service.ParticipantServiceI
 import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
 import com.github.soup.post.appllication.service.PostServiceImpl
+import com.github.soup.post.comment.application.service.CommentServiceImpl
 import com.github.soup.post.domain.Post
 import com.github.soup.post.exception.NotFoundPostAuthorityException
 import com.github.soup.post.infra.http.request.CreatePostRequest
@@ -20,7 +21,8 @@ class PostFacadeImpl(
     private val postService: PostServiceImpl,
     private val memberService: MemberServiceImpl,
     private val groupService: GroupServiceImpl,
-    private val participantService: ParticipantServiceImpl
+    private val participantService: ParticipantServiceImpl,
+    private val commentService: CommentServiceImpl
 ) : PostFacade {
 
     @Transactional
@@ -67,6 +69,7 @@ class PostFacadeImpl(
             throw NotFoundPostAuthorityException()
         }
 
+        commentService.deleteByPost(post)
         postService.deleteById(postId)
         return true
     }
