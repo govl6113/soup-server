@@ -9,7 +9,9 @@ interface CommentService {
 
     fun save(comment: Comment): Comment
 
-    fun deleteById(comment: Comment)
+    fun getByPost(post: Post): List<Comment>
 
+    fun deleteById(comment: Comment)
+    
     fun deleteByPost(post: Post)
 }

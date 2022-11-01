@@ -40,6 +40,15 @@ class CommentFacadeImpl(
         return comment.toResponse()
     }
 
+    override fun getByPostId(postId: String): List<CommentResponse> {
+        val post: Post = postService.getById(postId)
+        return commentService.getByPost(post).map { c -> c.toResponse() }
+    }
+
+    override fun get(commentId: String): CommentResponse {
+        return commentService.getById(commentId).toResponse()
+    }
+
     @Transactional
     override fun delete(memberId: String, commentId: String): Boolean {
         val writer: Member = memberService.getByMemberId(memberId)

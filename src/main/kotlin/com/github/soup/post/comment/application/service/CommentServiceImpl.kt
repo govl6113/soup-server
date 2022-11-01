@@ -22,6 +22,10 @@ class CommentServiceImpl(
         return commentRepository.getById(commentId).orElseThrow { NotFoundCommentException() }
     }
 
+    override fun getByPost(post: Post): List<Comment> {
+        return commentRepository.getByPost(post)
+    }
+
     @Transactional
     override fun deleteById(comment: Comment) {
         if (comment.child.size > 0) {

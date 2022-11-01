@@ -7,5 +7,9 @@ interface CommentFacade {
 
     fun create(memberId: String, request: CreateCommentRequest): CommentResponse
 
+    fun getByPostId(postId: String): List<CommentResponse>
+
+    fun get(commentId: String): CommentResponse
+
     fun delete(memberId: String, commentId: String): Boolean
 }

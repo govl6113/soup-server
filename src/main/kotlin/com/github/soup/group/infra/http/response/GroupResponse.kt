@@ -7,7 +7,6 @@ import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.domain.GroupTypeEnum
 import com.github.soup.member.infra.http.response.MemberResponse
 import kr.soupio.soup.group.entities.GroupRecruitmentEnum
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class GroupResponse(
@@ -20,10 +19,8 @@ data class GroupResponse(
     var isOnline: Boolean,
     var scope: GroupScopeEnum,
     var recruitment: GroupRecruitmentEnum,
-    var startDate: LocalDate? = null,
     var startHour: Int? = null,
     var startMinute: Int? = null,
-    var endDate: LocalDate? = null,
     var endHour: Int? = null,
     var endMinute: Int? = null,
     var dayOfTheWeek: MutableList<DayOfTheWeek>? = ArrayList(),

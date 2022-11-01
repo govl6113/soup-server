@@ -7,6 +7,7 @@ data class CommentResponse(
     val id: String,
     val writer: MemberResponse,
     val content: String,
+    val child: List<CommentResponse>?,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime
 )
