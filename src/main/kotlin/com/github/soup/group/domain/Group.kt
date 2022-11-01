@@ -27,7 +27,7 @@ class Group(
     @JoinColumn(name = "image_id", nullable = true)
     var image: File?,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id", nullable = false)
     var manager: Member,
 
@@ -100,7 +100,7 @@ class Group(
             content = content,
             image = image?.toResponse(),
             type = type,
-            manager = manager,
+            manager = manager.toResponse(),
             isOnline = isOnline,
             scope = scope,
             recruitment = recruitment,
