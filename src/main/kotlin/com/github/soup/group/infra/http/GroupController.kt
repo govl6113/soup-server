@@ -123,7 +123,7 @@ class GroupController(
     }
 
     @ApiOperation(value = "참여 중인 인원 확인")
-    @GetMapping("/{groupId}")
+    @GetMapping("/{groupId}/count")
     fun getParticipantCount(
         @PathVariable("groupId") groupId: String
     ): ResponseEntity<Int> =
