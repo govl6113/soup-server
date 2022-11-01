@@ -39,7 +39,7 @@ class GroupRepositoryImpl(
             .where(
                 group.type.eq(condition.type),
                 stateEq(condition.status),
-                isOnlineEq(condition.isOnline),
+                isOnlineEq(condition.online),
                 minPersonnelGoe(condition.minPersonnel),
                 maxPersonnelLoe(condition.maxPersonnel)
             )

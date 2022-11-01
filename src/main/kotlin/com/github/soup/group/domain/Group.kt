@@ -82,7 +82,7 @@ class Group(
     fun update(request: UpdateGroupRequest): Group {
         name = request.name
         content = request.content
-        isOnline = request.isOnline
+        isOnline = request.online
         scope = request.scope
         startHour = request.startHour
         startMinute = request.startMinute
