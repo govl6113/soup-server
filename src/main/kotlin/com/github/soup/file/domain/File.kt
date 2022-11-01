@@ -9,25 +9,25 @@ import javax.persistence.*
 
 @Entity
 class File(
-	@ManyToOne(targetEntity = Member::class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "uploader_id")
-	var uploader: Member,
+    @ManyToOne(targetEntity = Member::class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "uploader_id")
+    var uploader: Member,
 
-	@Column(name = "file_key", nullable = false)
-	var key: String
+    @Column(name = "file_key", nullable = false)
+    var key: String
 ) : Core() {
 
-	constructor(uploader: Member, type: FileType, mime: String) : this(
-		uploader = uploader,
-		key = "$type/${UUID.randomUUID()}.$mime",
-	)
+    constructor(uploader: Member, type: FileType, mime: String) : this(
+        uploader = uploader,
+        key = "$type/${UUID.randomUUID()}.$mime",
+    )
 
-	fun toResponse(): FileResponse {
-		return FileResponse(
-			id!!,
-			createdAt!!,
-			updatedAt!!,
-			"http://133.186.146.107:9001/bucket/$key"
-		)
-	}
+    fun toResponse(): FileResponse {
+        return FileResponse(
+            id!!,
+            createdAt!!,
+            updatedAt!!,
+            "http://133.186.215.107:9001/bucket/$key"
+        )
+    }
 }

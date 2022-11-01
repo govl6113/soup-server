@@ -8,6 +8,7 @@ import com.github.soup.group.domain.GroupTypeEnum
 import com.github.soup.member.infra.http.response.MemberResponse
 import kr.soupio.soup.group.entities.GroupRecruitmentEnum
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class GroupResponse(
     var id: String,
@@ -29,5 +30,7 @@ data class GroupResponse(
     var personnel: Int = 0,
     var views: Int = 0,
     var status: GroupStatusEnum,
+    var createdAt: LocalDateTime,
+    var updatedAt: LocalDateTime
 )
 

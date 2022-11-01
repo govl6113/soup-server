@@ -113,7 +113,9 @@ class Group(
             dayOfTheWeek = dayOfTheWeek,
             personnel = personnel,
             views = views,
-            status = status
+            status = status,
+            createdAt = createdAt!!,
+            updatedAt = updatedAt!!
         )
     }
 }
