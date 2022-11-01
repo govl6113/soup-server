@@ -27,7 +27,7 @@ class File(
             id!!,
             createdAt!!,
             updatedAt!!,
-            "http://133.186.215.107:9001/bucket/$key"
+            "http://133.186.215.107:9000/bucket/$key"
         )
     }
 }
