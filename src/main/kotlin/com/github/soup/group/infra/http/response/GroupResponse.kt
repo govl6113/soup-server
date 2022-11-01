@@ -5,7 +5,7 @@ import com.github.soup.group.domain.DayOfTheWeek
 import com.github.soup.group.domain.GroupScopeEnum
 import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.domain.GroupTypeEnum
-import com.github.soup.member.domain.Member
+import com.github.soup.member.infra.http.response.MemberResponse
 import kr.soupio.soup.group.entities.GroupRecruitmentEnum
 import java.time.LocalDate
 
@@ -15,7 +15,7 @@ data class GroupResponse(
     var content: String,
     var image: FileResponse?,
     var type: GroupTypeEnum,
-    var manager: Member,
+    var manager: MemberResponse,
     var isOnline: Boolean,
     var scope: GroupScopeEnum,
     var recruitment: GroupRecruitmentEnum,
