@@ -16,7 +16,7 @@ data class UpdateGroupRequest(
     val content: String,
 
     @NotNull
-    val isOnline: Boolean,
+    val online: Boolean,
 
     @NotNull
     val scope: GroupScopeEnum,

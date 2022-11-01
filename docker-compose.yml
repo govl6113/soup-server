@@ -3,7 +3,6 @@ version: "3"
 services:
   mysql:
     image: mysql:8
-    container_name: mysql
     volumes:
       - ./data/mysql:/var/lib/mysql
     environment:
@@ -23,7 +22,6 @@ services:
 
   redis:
     image: redis:6
-    container_name: redis
     volumes:
       - ./data/redis:/data
     command: redis-server --port 6379
@@ -34,7 +32,6 @@ services:
 
   minio:
     image: minio/minio
-    container_name: minio
     volumes:
       - ./data/minio:/bucket
     environment:

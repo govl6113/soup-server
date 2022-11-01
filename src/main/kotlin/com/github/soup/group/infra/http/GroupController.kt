@@ -80,13 +80,13 @@ class GroupController(
         @PathVariable("type") type: GroupTypeEnum,
         @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
         @RequestParam(value = "status", required = false) status: GroupStatusEnum?,
-        @RequestParam(value = "isOnline", required = false) isOnline: Boolean?,
+        @RequestParam(value = "online", required = false) online: Boolean?,
         @RequestParam(value = "minPersonnel", required = false) minPersonnel: Int?,
         @RequestParam(value = "maxPersonnel", required = false) maxPersonnel: Int?,
     ): ResponseEntity<List<GroupResponse>> =
         ResponseEntity.ok().body(
             groupFacade.allGroups(
-                ListGroupRequest(type, page, status, isOnline, minPersonnel, maxPersonnel),
+                ListGroupRequest(type, page, status, online, minPersonnel, maxPersonnel),
             )
         )
 
