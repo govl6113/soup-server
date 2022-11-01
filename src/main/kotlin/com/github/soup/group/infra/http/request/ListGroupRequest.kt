@@ -7,7 +7,7 @@ data class ListGroupRequest(
     val type: GroupTypeEnum,
     val page: Int,
     val status: GroupStatusEnum? = null,
-    val isOnline: Boolean? = null,
+    val online: Boolean? = null,
     val minPersonnel: Int? = null,
     val maxPersonnel: Int? = null
 )

@@ -6,10 +6,8 @@ import com.github.soup.auth.infra.http.oauth.KakaoTokenResponse
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
-import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
-@Service
 class OAuthServiceImpl : OAuthService {
 	override fun getClientId(type: AuthType, token: String): String {
 		val template = RestTemplate()

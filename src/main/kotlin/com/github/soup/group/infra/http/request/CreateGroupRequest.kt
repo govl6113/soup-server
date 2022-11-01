@@ -12,52 +12,52 @@ import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
 data class CreateGroupRequest(
-    val image: MultipartFile? = null,
+	val image: MultipartFile? = null,
 
-    @NotEmpty
-    val name: String,
+	@NotEmpty
+	val name: String,
 
-    @NotEmpty
-    val content: String,
+	@NotEmpty
+	val content: String,
 
-    @NotNull
-    val type: GroupTypeEnum,
+	@NotNull
+	val type: GroupTypeEnum,
 
-    @NotNull
-    val isOnline: Boolean,
+	@NotNull
+	val online: Boolean,
 
-    @NotNull
-    val scope: GroupScopeEnum,
+	@NotNull
+	val scope: GroupScopeEnum,
 
-    @NotNull
-    val recruitment: GroupRecruitmentEnum,
+	@NotNull
+	val recruitment: GroupRecruitmentEnum,
 
-    @NotNull
-    val startHour: Int,
+	@NotNull
+	val startHour: Int,
 
-    @NotNull
-    var startMinute: Int,
-    var endHour: Int? = null,
-    var endMinute: Int? = null,
-    var dayOfTheWeek: MutableList<DayOfTheWeek>? = ArrayList(),
-    var meetingLink: String? = null,
+	@NotNull
+	var startMinute: Int,
+	var endHour: Int? = null,
+	var endMinute: Int? = null,
+	var dayOfTheWeek: MutableList<DayOfTheWeek>? = ArrayList(),
+	var meetingLink: String? = null,
 ) {
-    fun toEntity(manager: Member, image: File?): Group {
-        return Group(
-            type = type,
-            name = name,
-            content = content,
-            image = image,
-            manager = manager,
-            isOnline = isOnline,
-            scope = scope,
-            recruitment = recruitment,
-            startHour = startHour,
-            startMinute = startMinute,
-            endHour = endHour,
-            endMinute = endMinute,
-            dayOfTheWeek = dayOfTheWeek,
-            meetingLink = meetingLink
-        )
-    }
+	fun toEntity(manager: Member, image: File?): Group {
+		return Group(
+			type = type,
+			name = name,
+			content = content,
+			image = image,
+			manager = manager,
+			isOnline = online,
+			scope = scope,
+			recruitment = recruitment,
+			startHour = startHour,
+			startMinute = startMinute,
+			endHour = endHour,
+			endMinute = endMinute,
+			dayOfTheWeek = dayOfTheWeek,
+			meetingLink = meetingLink
+		)
+	}
 }
