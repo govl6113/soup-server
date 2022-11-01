@@ -1,13 +1,16 @@
 package com.github.soup.post.comment.infra.persistence
 
 import com.github.soup.post.comment.domain.Comment
+import com.github.soup.post.comment.domain.QComment.comment
 import com.github.soup.post.domain.Post
+import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
 class CommentRepositoryImpl(
-    private val commentRepository: CommentJpaRepository
+    private val commentRepository: CommentJpaRepository,
+    private val queryFactory: JPAQueryFactory,
 ) : CommentRepository {
 
     override fun save(comment: Comment): Comment {
@@ -19,7 +22,14 @@ class CommentRepositoryImpl(
     }
 
     override fun getByPost(post: Post): List<Comment> {
-        return commentRepository.findByPost(post)
+        return queryFactory
+            .selectFrom(comment)
+            .where(
+                comment.post.eq(post),
+                comment.parent.isNull
+            )
+            .orderBy(comment.updatedAt.asc())
+            .fetch()
     }
 
     override fun delete(comment: Comment) {

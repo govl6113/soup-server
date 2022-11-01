@@ -27,6 +27,14 @@ class CommentController(
             )
         )
 
+    @PostMapping("/{postId}")
+    fun getComments(
+        @PathVariable("postId") postId: String
+    ): ResponseEntity<List<CommentResponse>> =
+        ResponseEntity.ok().body(
+            commentFacade.getByPostId(postId)
+        )
+
     @DeleteMapping("/{commentId}")
     fun deleteComment(
         @ApiIgnore authentication: Authentication,

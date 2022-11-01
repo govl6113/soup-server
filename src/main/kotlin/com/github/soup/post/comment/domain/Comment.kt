@@ -28,7 +28,7 @@ class Comment(
     var parent: Comment? = null
 
     @BatchSize(size = 100)
-    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = [CascadeType.REMOVE], orphanRemoval = true)
     var child: MutableList<Comment> = mutableListOf()
 
     fun addChild(comment: Comment) {
@@ -41,6 +41,9 @@ class Comment(
             id = id.toString(),
             writer = writer.toResponse(),
             content = content,
+            child = if (child.size > 0) {
+                child.map { c -> c.toResponse() }
+            } else null,
             createdAt = createdAt!!,
             updatedAt = updatedAt!!
         )
