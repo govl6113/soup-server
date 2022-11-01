@@ -82,4 +82,9 @@ class GroupFacadeImpl(
         participantService.checkParticipant(member = member, group = group)
         return participantService.members(group = group, page = page)
     }
+
+    override fun getParticipantCount(groupId: String): Int {
+        val group: Group = groupService.getById(groupId)
+        return participantService.getParticipantCount(group)
+    }
 }

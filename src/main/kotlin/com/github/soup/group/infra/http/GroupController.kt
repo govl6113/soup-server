@@ -121,4 +121,13 @@ class GroupController(
             )
         )
     }
+
+    @ApiOperation(value = "참여 중인 인원 확인")
+    @GetMapping("/{groupId}")
+    fun getParticipantCount(
+        @PathVariable("groupId") groupId: String
+    ): ResponseEntity<Int> =
+        ResponseEntity.ok().body(
+            groupFacade.getParticipantCount(groupId)
+        )
 }

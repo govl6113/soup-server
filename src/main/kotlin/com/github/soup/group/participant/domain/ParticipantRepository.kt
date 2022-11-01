@@ -14,4 +14,6 @@ interface ParticipantRepository {
     fun getJoinList(member: Member, status: GroupStatusEnum, pageable: Pageable): List<Group>
 
     fun getMembers(group: Group, pageable: Pageable): List<Participant>
+
+    fun getParticipantCount(group: Group): Int
 }

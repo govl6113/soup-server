@@ -22,4 +22,6 @@ interface GroupFacade {
     fun joinGroups(memberId: String, status: GroupStatusEnum, page: Int): List<GroupResponse>
 
     fun members(memberId: String, groupId: String, page: Int): List<Member>
+
+    fun getParticipantCount(groupId: String): Int
 }
