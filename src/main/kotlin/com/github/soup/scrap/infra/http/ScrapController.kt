@@ -11,14 +11,14 @@ import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/scrap")
+@RequestMapping("/api/scrap")
 class ScrapController(
     private val scrapFacade: ScrapFacadeImpl
 ) {
 
     @ApiOperation(value = "스크랩하기")
     @PostMapping("/new")
-    fun getGroup(
+    fun createScrap(
         @ApiIgnore authentication: Authentication,
         @Valid request: CreateScrapRequest
     ): ResponseEntity<ScrapResponse> =
@@ -42,9 +42,9 @@ class ScrapController(
 
     @ApiOperation(value = "스크랩 취소")
     @DeleteMapping("/{scrapId}")
-    fun getGroup(
+    fun deleteScrap(
         @ApiIgnore authentication: Authentication,
-        @PathVariable scrapId: String
+        @PathVariable("scrapId") scrapId: String
     ): ResponseEntity<Boolean> =
         ResponseEntity.ok().body(
             scrapFacade.delete(
