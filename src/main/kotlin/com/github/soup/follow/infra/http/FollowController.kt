@@ -33,7 +33,7 @@ class FollowController(
         @ApiIgnore authentication: Authentication,
     ): ResponseEntity<List<MemberResponse>> =
         ResponseEntity.ok().body(
-            followFacade.getFromList(
+            followFacade.getFollowingList(
                 authentication.name,
             )
         )
@@ -44,7 +44,7 @@ class FollowController(
         @ApiIgnore authentication: Authentication,
     ): ResponseEntity<List<MemberResponse>> =
         ResponseEntity.ok().body(
-            followFacade.getToList(
+            followFacade.getFollowerList(
                 authentication.name,
             )
         )

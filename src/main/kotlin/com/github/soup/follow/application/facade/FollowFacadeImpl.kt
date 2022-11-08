@@ -2,6 +2,7 @@ package com.github.soup.follow.application.facade
 
 import com.github.soup.follow.application.service.FollowServiceImpl
 import com.github.soup.follow.domain.Follow
+import com.github.soup.follow.exception.NotFollowSelfException
 import com.github.soup.follow.exception.NotFoundFollowAuthorityException
 import com.github.soup.follow.infra.http.response.FollowResponse
 import com.github.soup.member.application.service.MemberServiceImpl
@@ -16,6 +17,11 @@ class FollowFacadeImpl(
 ) : FollowFacade {
 
     override fun create(fromId: String, targetId: String): FollowResponse {
+        if (fromId != targetId) {
+            throw NotFollowSelfException()
+
+        }
+
         val from: Member = memberService.getByMemberId(fromId)
         val to: Member = memberService.getByMemberId(targetId)
 
@@ -27,12 +33,12 @@ class FollowFacadeImpl(
         ).toResponse()
     }
 
-    override fun getFromList(memberId: String): List<MemberResponse> {
+    override fun getFollowingList(memberId: String): List<MemberResponse> {
         val from: Member = memberService.getByMemberId(memberId)
         return followService.getFromList(from).map { f -> f.from.toResponse() }
     }
 
-    override fun getToList(memberId: String): List<MemberResponse> {
+    override fun getFollowerList(memberId: String): List<MemberResponse> {
         val to: Member = memberService.getByMemberId(memberId)
         return followService.getToList(to).map { f -> f.to.toResponse() }
     }

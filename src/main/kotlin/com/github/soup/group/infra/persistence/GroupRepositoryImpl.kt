@@ -45,7 +45,7 @@ class GroupRepositoryImpl(
             )
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
-            .orderBy(group.updatedAt.desc())
+            .orderBy(group.createdAt.desc())
             .fetch()
     }
 

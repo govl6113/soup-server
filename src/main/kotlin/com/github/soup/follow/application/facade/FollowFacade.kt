@@ -6,9 +6,9 @@ import com.github.soup.member.infra.http.response.MemberResponse
 interface FollowFacade {
     fun create(fromId: String, targetId: String): FollowResponse
 
-    fun getFromList(memberId: String): List<MemberResponse>
+    fun getFollowingList(memberId: String): List<MemberResponse>
 
-    fun getToList(memberId: String): List<MemberResponse>
+    fun getFollowerList(memberId: String): List<MemberResponse>
 
     fun delete(memberId: String, followId: String): Boolean
 }
