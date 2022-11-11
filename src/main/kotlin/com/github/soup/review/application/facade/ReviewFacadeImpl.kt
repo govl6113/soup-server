@@ -6,6 +6,7 @@ import com.github.soup.review.application.service.ReviewServiceImpl
 import com.github.soup.review.domain.Review
 import com.github.soup.review.exception.NotWriterException
 import com.github.soup.review.exception.ReviewDontSeeSelfException
+import com.github.soup.review.exception.ReviewDontWriteSelfException
 import com.github.soup.review.infra.http.request.CreateReviewRequest
 import com.github.soup.review.infra.http.request.UpdateReviewRequest
 import com.github.soup.review.infra.http.response.ReviewResponse
@@ -21,6 +22,9 @@ class ReviewFacadeImpl(
 
     @Transactional
     override fun create(memberId: String, request: CreateReviewRequest): ReviewResponse {
+        if (memberId == request.targetId) {
+            throw ReviewDontWriteSelfException()
+        }
         val member: Member = memberService.getByMemberId(memberId)
         val target: Member = memberService.getByMemberId(request.targetId)
 

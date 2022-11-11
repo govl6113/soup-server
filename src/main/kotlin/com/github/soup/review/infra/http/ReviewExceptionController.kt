@@ -3,6 +3,7 @@ package com.github.soup.review.infra.http
 import com.github.soup.review.exception.NotFoundReviewException
 import com.github.soup.review.exception.NotWriterException
 import com.github.soup.review.exception.ReviewDontSeeSelfException
+import com.github.soup.review.exception.ReviewDontWriteSelfException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -23,6 +24,11 @@ class ReviewExceptionController {
 
     @ExceptionHandler(value = [ReviewDontSeeSelfException::class])
     fun reviewDontSeeSelfException(exception: ReviewDontSeeSelfException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.message)
+    }
+
+    @ExceptionHandler(value = [ReviewDontWriteSelfException::class])
+    fun reviewDontWriteSelfException(exception: ReviewDontWriteSelfException): ResponseEntity<String> {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.message)
     }
 }
