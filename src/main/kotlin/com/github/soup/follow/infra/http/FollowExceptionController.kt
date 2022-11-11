@@ -1,5 +1,6 @@
 package com.github.soup.follow.infra.http
 
+import com.github.soup.follow.exception.NotFollowSelfException
 import com.github.soup.follow.exception.NotFoundFollowAuthorityException
 import com.github.soup.follow.exception.NotFoundFollowException
 import org.springframework.http.HttpStatus
@@ -18,5 +19,10 @@ class FollowExceptionController {
     @ExceptionHandler(value = [NotFoundFollowAuthorityException::class])
     fun notFoundFollowAuthorityException(exception: NotFoundFollowAuthorityException): ResponseEntity<String> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.message)
+    }
+
+    @ExceptionHandler(value = [NotFollowSelfException::class])
+    fun notFollowSelfException(exception: NotFollowSelfException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.message)
     }
 }

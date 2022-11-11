@@ -11,14 +11,16 @@ import com.github.soup.scrap.exception.NotFoundScrapException
 import com.github.soup.scrap.infra.http.request.CreateScrapRequest
 import com.github.soup.scrap.infra.http.response.ScrapResponse
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
+@Transactional(readOnly = true)
 class ScrapFacadeImpl(
     private val scrapService: ScrapServiceImpl,
     private val memberService: MemberServiceImpl,
     private val groupService: GroupServiceImpl
 ) : ScrapFacade {
-
+    
     override fun create(memberId: String, request: CreateScrapRequest): ScrapResponse {
         val member: Member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(request.groupId)
