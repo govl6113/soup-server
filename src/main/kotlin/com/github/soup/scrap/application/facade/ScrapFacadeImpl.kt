@@ -20,7 +20,7 @@ class ScrapFacadeImpl(
     private val memberService: MemberServiceImpl,
     private val groupService: GroupServiceImpl
 ) : ScrapFacade {
-    
+
     override fun create(memberId: String, request: CreateScrapRequest): ScrapResponse {
         val member: Member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(request.groupId)
