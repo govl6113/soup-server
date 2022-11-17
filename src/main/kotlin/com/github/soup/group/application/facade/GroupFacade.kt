@@ -15,6 +15,8 @@ interface GroupFacade {
 
     fun get(memberId: String, groupId: String): GroupResponse
 
+    fun start(memberId: String, groupId: String): GroupResponse
+
     fun finish(memberId: String, groupId: String): GroupResponse
 
     fun allGroups(request: ListGroupRequest): List<GroupResponse>
@@ -23,5 +25,7 @@ interface GroupFacade {
 
     fun members(memberId: String, groupId: String, page: Int): List<Member>
 
+    fun popularity(): List<GroupResponse>
+    
     fun getParticipantCount(groupId: String): Int
 }

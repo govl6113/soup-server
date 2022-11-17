@@ -61,6 +61,19 @@ class GroupController(
             )
         )
 
+    @ApiOperation(value = "그룹 상태 시작")
+    @PatchMapping("/{groupId}")
+    fun startGroup(
+        @ApiIgnore authentication: Authentication,
+        @PathVariable("groupId") groupId: String,
+    ): ResponseEntity<GroupResponse> =
+        ResponseEntity.ok().body(
+            groupFacade.start(
+                authentication.name,
+                groupId
+            )
+        )
+
     @ApiOperation(value = "그룹 상태 종료")
     @PatchMapping("/{groupId}")
     fun finishGroup(
@@ -121,6 +134,11 @@ class GroupController(
             )
         )
     }
+
+    @ApiOperation(value = "인기 그룹 목록")
+    @GetMapping("/popularity")
+    fun popularity(): ResponseEntity<List<GroupResponse>> = ResponseEntity.ok().body(groupFacade.popularity())
+
 
     @ApiOperation(value = "참여 중인 인원 확인")
     @GetMapping("/{groupId}/count")

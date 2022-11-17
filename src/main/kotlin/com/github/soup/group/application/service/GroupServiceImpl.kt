@@ -1,6 +1,7 @@
 package com.github.soup.group.application.service
 
 import com.github.soup.group.domain.Group
+import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.exception.NotFoundGroupException
 import com.github.soup.group.infra.http.request.ListGroupRequest
 import com.github.soup.group.infra.persistence.GroupRepositoryImpl
@@ -34,6 +35,10 @@ class GroupServiceImpl(
             condition = request,
             pageable = pageable
         )
+    }
+
+    override fun getViewDecs(): List<Group> {
+        return groupRepository.getOrderByViewDecs(GroupStatusEnum.READY)
     }
 
 }

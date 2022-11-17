@@ -73,5 +73,7 @@ class GroupRepositoryImpl(
         return groupRepository.findByNameContaining(name, pageable)
     }
 
-
+    override fun getOrderByViewDecs(status: GroupStatusEnum): List<Group> {
+        return groupRepository.findByStatusOrderByViewsDesc(status)
+    }
 }
