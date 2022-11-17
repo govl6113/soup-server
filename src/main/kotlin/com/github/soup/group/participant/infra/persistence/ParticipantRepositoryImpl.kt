@@ -3,6 +3,7 @@ package com.github.soup.group.participant.infra.persistence
 import com.github.soup.file.domain.QFile.file
 import com.github.soup.group.domain.Group
 import com.github.soup.group.domain.GroupStatusEnum
+import com.github.soup.group.domain.QGroup
 import com.github.soup.group.domain.QGroup.group
 import com.github.soup.group.participant.domain.Participant
 import com.github.soup.group.participant.domain.ParticipantRepository
@@ -23,12 +24,27 @@ class ParticipantRepositoryImpl(
         return participantRepository.save(participant)
     }
 
-    override fun participant(member: Member, group: Group): Participant? {
-        return participantRepository.findByMemberAndGroupAndIsAccepted(member, group, true)
+    override fun getByMemberIdAndGroup(memberId: String, group: Group): Participant? {
+        return participantRepository.findByMemberIdAndGroup(memberId, group)
     }
 
-    override fun getMembers(group: Group, pageable: Pageable): List<Participant> {
-        return participantRepository.findByGroupAndIsAccepted(group, true, pageable)
+    override fun getByGroupAndIsAccepted(group: Group, pageable: Pageable, isAccepted: Boolean?): List<Participant> {
+        return queryFactory
+            .selectFrom(participant)
+            .leftJoin(participant.group, QGroup.group)
+            .leftJoin(QGroup.group.image, file)
+            .where(
+                participant.group.eq(group),
+                isAcceptedEq(isAccepted)
+            )
+            .orderBy(participant.group.createdAt.desc())
+            .offset(pageable.offset)
+            .limit(pageable.pageSize.toLong())
+            .fetch()
+    }
+
+    override fun getByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean): Participant? {
+        return participantRepository.findByMemberAndGroupAndIsAccepted(member, group, isAccepted)
     }
 
     override fun getJoinList(member: Member, status: GroupStatusEnum, pageable: Pageable): List<Group> {
@@ -64,4 +80,8 @@ class ParticipantRepositoryImpl(
         else null
     }
 
+    private fun isAcceptedEq(isAccepted: Boolean?): BooleanExpression? {
+        return if (isAccepted != null) participant.isAccepted.eq(isAccepted)
+        else null
+    }
 }

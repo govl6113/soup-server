@@ -9,11 +9,13 @@ interface ParticipantRepository {
 
     fun save(participant: Participant): Participant
 
-    fun participant(member: Member, group: Group): Participant?
+    fun getByMemberIdAndGroup(memberId: String, group: Group): Participant?
+
+    fun getByGroupAndIsAccepted(group: Group, pageable: Pageable, isAccepted: Boolean?): List<Participant>
+
+    fun getByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean): Participant?
 
     fun getJoinList(member: Member, status: GroupStatusEnum, pageable: Pageable): List<Group>
-
-    fun getMembers(group: Group, pageable: Pageable): List<Participant>
 
     fun getParticipantCount(group: Group): Int
 }

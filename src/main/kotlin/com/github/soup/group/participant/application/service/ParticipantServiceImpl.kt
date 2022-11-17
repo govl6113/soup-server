@@ -27,15 +27,28 @@ class ParticipantServiceImpl(
                 message = message
             )
         )
-
         return true
     }
 
+    override fun getParticipantList(group: Group, page: Int): List<Participant> {
+        val pageable: Pageable = PageRequest.of(page - 1, 10)
+        return participantRepository.getByGroupAndIsAccepted(
+            group = group,
+            pageable = pageable,
+            isAccepted = null
+        )
+    }
+
+    override fun getByMemberIdAndGroup(memberId: String, group: Group): Participant? {
+        return participantRepository.getByMemberIdAndGroup(memberId, group)
+    }
+
     override fun checkParticipant(member: Member, group: Group) {
-        if (participantRepository.participant(member, group) == null)
+        if (participantRepository.getByMemberAndGroupAndIsAccepted(member, group, true) == null)
             throw NotParticipantException()
     }
 
+    // group에서 사용
     override fun joinGroupList(member: Member, status: GroupStatusEnum, page: Int): List<Group> {
         val pageable = PageRequest.of(page - 1, 10)
         return participantRepository.getJoinList(member = member, status = status, pageable = pageable)
@@ -43,10 +56,15 @@ class ParticipantServiceImpl(
 
     override fun members(group: Group, page: Int): List<Member> {
         val pageable: Pageable = PageRequest.of(page - 1, 10)
-        return participantRepository.getMembers(group = group, pageable = pageable).map { it.member }
+        return participantRepository.getByGroupAndIsAccepted(
+            group = group,
+            pageable = pageable,
+            isAccepted = true
+        ).map { it.member }
     }
 
     override fun getParticipantCount(group: Group): Int {
         return participantRepository.getParticipantCount(group)
     }
+
 }
