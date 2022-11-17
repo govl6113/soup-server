@@ -47,8 +47,21 @@ class ParticipantRepositoryImpl(
             .fetch()
     }
 
+    override fun getParticipantCount(group: Group): Int {
+        return Math.toIntExact(
+            queryFactory
+                .select(participant.count())
+                .from(participant)
+                .where(
+                    participant.isAccepted.eq(true)
+                )
+                .fetchFirst()
+        )
+    }
+
     private fun stateEq(status: GroupStatusEnum?): BooleanExpression? {
         return if (status != null) group.status.eq(status)
         else null
     }
+
 }

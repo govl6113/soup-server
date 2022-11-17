@@ -1,10 +1,12 @@
 package com.github.soup.post.infra.http
 
 import com.github.soup.post.appllication.facade.PostFacadeImpl
+import com.github.soup.post.domain.PostTypeEnum
 import com.github.soup.post.infra.http.request.CreatePostRequest
 import com.github.soup.post.infra.http.request.UpdatePostRequest
 import com.github.soup.post.infra.http.response.PostResponse
 import io.swagger.annotations.ApiOperation
+import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
@@ -29,9 +31,26 @@ class PostController(
             )
         )
 
-    @ApiOperation(value = "게시글 조회")
+    @ApiOperation(value = "게시글 타입별 조회")
+    @GetMapping("/{groupId}/{type}")
+    fun getPosts(
+        @ApiIgnore authentication: Authentication,
+        @PathVariable("groupId") groupId: String,
+        @PathVariable("type") type: PostTypeEnum,
+        @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
+    ): ResponseEntity<Page<PostResponse>> =
+        ResponseEntity.ok().body(
+            postFacade.getList(
+                authentication.name,
+                groupId,
+                type,
+                page
+            )
+        )
+
+    @ApiOperation(value = "게시글 상세 조회")
     @GetMapping("/{postId}")
-    fun getGroup(
+    fun getPost(
         @ApiIgnore authentication: Authentication,
         @PathVariable("postId") postId: String,
     ): ResponseEntity<PostResponse> =

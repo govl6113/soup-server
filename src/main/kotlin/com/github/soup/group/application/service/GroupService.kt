@@ -12,4 +12,5 @@ interface GroupService {
     fun delete(group: Group)
 
     fun allGroupList(request: ListGroupRequest): List<Group>
+    fun getViewDecs(): List<Group>
 }

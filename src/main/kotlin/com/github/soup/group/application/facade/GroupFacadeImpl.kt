@@ -57,6 +57,17 @@ class GroupFacadeImpl(
     }
 
     @Transactional
+    override fun start(memberId: String, groupId: String): GroupResponse {
+        val member: Member = memberService.getByMemberId(memberId)
+        val group: Group = groupService.getById(groupId)
+        if (member != group.manager) {
+            throw NotFoundManagerAuthorityException()
+        }
+        group.status = GroupStatusEnum.PROGRESS
+        return group.toResponse()
+    }
+
+    @Transactional
     override fun finish(memberId: String, groupId: String): GroupResponse {
         val member: Member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(groupId)
@@ -81,5 +92,14 @@ class GroupFacadeImpl(
         val group: Group = groupService.getById(groupId)
         participantService.checkParticipant(member = member, group = group)
         return participantService.members(group = group, page = page)
+    }
+
+    override fun popularity(): List<GroupResponse> {
+        return groupService.getViewDecs().map { it.toResponse() }
+    }
+
+    override fun getParticipantCount(groupId: String): Int {
+        val group: Group = groupService.getById(groupId)
+        return participantService.getParticipantCount(group)
     }
 }

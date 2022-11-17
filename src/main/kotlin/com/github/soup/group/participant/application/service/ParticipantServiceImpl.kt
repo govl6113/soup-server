@@ -46,4 +46,7 @@ class ParticipantServiceImpl(
         return participantRepository.getMembers(group = group, pageable = pageable).map { it.member }
     }
 
+    override fun getParticipantCount(group: Group): Int {
+        return participantRepository.getParticipantCount(group)
+    }
 }

@@ -12,4 +12,6 @@ interface ParticipantService {
     fun joinGroupList(member: Member, status: GroupStatusEnum, page: Int): List<Group>
 
     fun members(group: Group, page: Int): List<Member>
+
+    fun getParticipantCount(group: Group): Int
 }
