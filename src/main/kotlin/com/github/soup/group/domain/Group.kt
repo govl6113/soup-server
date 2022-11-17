@@ -60,10 +60,11 @@ class Group(
 
     @Column(nullable = true)
     var meetingLink: String? = null,
-) : Core() {
+
     @Column(nullable = false)
     @ColumnDefault("0")
     var personnel: Int = 0
+) : Core() {
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -104,10 +105,8 @@ class Group(
             isOnline = isOnline,
             scope = scope,
             recruitment = recruitment,
-            startDate = startDate,
             startHour = startHour,
             startMinute = startMinute,
-            endDate = endDate,
             endHour = endHour,
             endMinute = endMinute,
             dayOfTheWeek = dayOfTheWeek,

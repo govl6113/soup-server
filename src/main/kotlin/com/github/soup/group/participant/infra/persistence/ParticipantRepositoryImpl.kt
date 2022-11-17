@@ -41,6 +41,7 @@ class ParticipantRepositoryImpl(
                 participant.member.eq(member),
                 stateEq(status)
             )
+            .orderBy(participant.group.createdAt.desc())
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
             .fetch()

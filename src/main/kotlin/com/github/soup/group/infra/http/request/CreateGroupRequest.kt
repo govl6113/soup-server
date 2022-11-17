@@ -27,6 +27,9 @@ data class CreateGroupRequest(
 	val online: Boolean,
 
 	@NotNull
+	val personnel: Int,
+
+	@NotNull
 	val scope: GroupScopeEnum,
 
 	@NotNull
@@ -49,6 +52,7 @@ data class CreateGroupRequest(
 			content = content,
 			image = image,
 			manager = manager,
+			personnel = personnel,
 			isOnline = online,
 			scope = scope,
 			recruitment = recruitment,

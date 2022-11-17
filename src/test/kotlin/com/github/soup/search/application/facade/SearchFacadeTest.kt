@@ -63,6 +63,7 @@ class SearchFacadeTest(
                 content = "test_description",
                 type = GroupTypeEnum.PROJECT,
                 online = true,
+                personnel = 3,
                 scope = GroupScopeEnum.PUBLIC,
                 recruitment = GroupRecruitmentEnum.FIRSTCOME,
                 startHour = 13,
