@@ -6,7 +6,6 @@ import com.github.soup.scrap.domain.Scrap
 import com.github.soup.scrap.exception.NotFoundScrapException
 import com.github.soup.scrap.infra.persistence.ScrapRepositoryImpl
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
@@ -28,9 +27,8 @@ class ScrapServiceImpl(
         return scrapRepository.getByMember(member)
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     override fun getByMemberAndGroup(member: Member, group: Group): Scrap? {
-        return scrapRepository.getByMemberAndGroup(member, group).orElseThrow { NotFoundScrapException() }
+        return scrapRepository.getByMemberAndGroup(member, group).orElse(null)
     }
 
     @Transactional

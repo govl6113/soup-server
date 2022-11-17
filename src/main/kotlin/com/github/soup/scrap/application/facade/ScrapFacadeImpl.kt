@@ -7,7 +7,6 @@ import com.github.soup.member.domain.Member
 import com.github.soup.scrap.application.service.ScrapServiceImpl
 import com.github.soup.scrap.domain.Scrap
 import com.github.soup.scrap.exception.NotFoundScrapAuthorityException
-import com.github.soup.scrap.exception.NotFoundScrapException
 import com.github.soup.scrap.infra.http.request.CreateScrapRequest
 import com.github.soup.scrap.infra.http.response.ScrapResponse
 import org.springframework.stereotype.Component
@@ -21,20 +20,22 @@ class ScrapFacadeImpl(
     private val groupService: GroupServiceImpl
 ) : ScrapFacade {
 
+    @Transactional
     override fun create(memberId: String, request: CreateScrapRequest): ScrapResponse {
         val member: Member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(request.groupId)
 
-        return try {
-            scrapService.getByMemberAndGroup(member, group)!!.toResponse()
-        } catch (e: NotFoundScrapException) {
-            scrapService.save(
-                Scrap(
-                    member = member,
-                    group = group
-                )
-            ).toResponse()
+        val scrap = scrapService.getByMemberAndGroup(member, group)
+        if (scrap != null) {
+            return scrap.toResponse()
         }
+        return scrapService.save(
+            Scrap(
+                member = member,
+                group = group
+            )
+        ).toResponse()
+
     }
 
     override fun getList(memberId: String): List<ScrapResponse> {
