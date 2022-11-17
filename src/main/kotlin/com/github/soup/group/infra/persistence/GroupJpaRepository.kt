@@ -9,6 +9,6 @@ interface GroupJpaRepository : JpaRepository<Group, String> {
 
     fun findByNameContaining(name: String, pageable: Pageable): List<Group>
 
-    fun findByStatusOrderByViewsDesc(status: GroupStatusEnum): List<Group>
+    fun findTop10ByStatusOrderByViewsDesc(status: GroupStatusEnum): List<Group>
 
 }

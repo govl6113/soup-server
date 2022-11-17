@@ -74,6 +74,6 @@ class GroupRepositoryImpl(
     }
 
     override fun getOrderByViewDecs(status: GroupStatusEnum): List<Group> {
-        return groupRepository.findByStatusOrderByViewsDesc(status)
+        return groupRepository.findTop10ByStatusOrderByViewsDesc(status)
     }
 }

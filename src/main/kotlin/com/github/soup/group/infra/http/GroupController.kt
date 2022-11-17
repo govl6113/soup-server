@@ -62,7 +62,7 @@ class GroupController(
         )
 
     @ApiOperation(value = "그룹 상태 시작")
-    @PatchMapping("/{groupId}")
+    @PatchMapping("/{groupId}/start")
     fun startGroup(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String,
@@ -75,7 +75,7 @@ class GroupController(
         )
 
     @ApiOperation(value = "그룹 상태 종료")
-    @PatchMapping("/{groupId}")
+    @PatchMapping("/{groupId}/finish")
     fun finishGroup(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String,
