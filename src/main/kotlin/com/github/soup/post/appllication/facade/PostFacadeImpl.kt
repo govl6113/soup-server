@@ -8,10 +8,12 @@ import com.github.soup.member.domain.Member
 import com.github.soup.post.appllication.service.PostServiceImpl
 import com.github.soup.post.comment.application.service.CommentServiceImpl
 import com.github.soup.post.domain.Post
+import com.github.soup.post.domain.PostTypeEnum
 import com.github.soup.post.exception.NotFoundPostAuthorityException
 import com.github.soup.post.infra.http.request.CreatePostRequest
 import com.github.soup.post.infra.http.request.UpdatePostRequest
 import com.github.soup.post.infra.http.response.PostResponse
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -39,6 +41,15 @@ class PostFacadeImpl(
                 type = request.type
             )
         ).toResponse()
+    }
+
+    override fun getList(memberId: String, groupId: String, type: PostTypeEnum, page: Int): Page<PostResponse> {
+        val member: Member = memberService.getByMemberId(memberId)
+        val group: Group = groupService.getById(groupId)
+
+        participantService.checkParticipant(member, group)
+
+        return postService.getByGroupAndType(group, type, page).map { it.toResponse() }
     }
 
     override fun get(memberId: String, postId: String): PostResponse {
