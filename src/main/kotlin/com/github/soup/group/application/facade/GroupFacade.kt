@@ -5,7 +5,7 @@ import com.github.soup.group.infra.http.request.CreateGroupRequest
 import com.github.soup.group.infra.http.request.ListGroupRequest
 import com.github.soup.group.infra.http.request.UpdateGroupRequest
 import com.github.soup.group.infra.http.response.GroupResponse
-import com.github.soup.member.domain.Member
+import com.github.soup.member.infra.http.response.MemberResponse
 
 interface GroupFacade {
 
@@ -23,9 +23,9 @@ interface GroupFacade {
 
     fun joinGroups(memberId: String, status: GroupStatusEnum, page: Int): List<GroupResponse>
 
-    fun members(memberId: String, groupId: String, page: Int): List<Member>
+    fun members(memberId: String, groupId: String, page: Int): List<MemberResponse>
 
     fun popularity(): List<GroupResponse>
-    
+
     fun getParticipantCount(groupId: String): Int
 }

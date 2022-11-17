@@ -7,7 +7,7 @@ import com.github.soup.group.infra.http.request.CreateGroupRequest
 import com.github.soup.group.infra.http.request.ListGroupRequest
 import com.github.soup.group.infra.http.request.UpdateGroupRequest
 import com.github.soup.group.infra.http.response.GroupResponse
-import com.github.soup.member.domain.Member
+import com.github.soup.member.infra.http.response.MemberResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
@@ -125,7 +125,7 @@ class GroupController(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String,
         @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
-    ): ResponseEntity<List<Member>> {
+    ): ResponseEntity<List<MemberResponse>> {
         return ResponseEntity.ok().body(
             groupFacade.members(
                 memberId = authentication.name,

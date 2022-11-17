@@ -14,6 +14,7 @@ import com.github.soup.group.infra.http.response.GroupResponse
 import com.github.soup.group.participant.application.service.ParticipantServiceImpl
 import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
+import com.github.soup.member.infra.http.response.MemberResponse
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -87,11 +88,11 @@ class GroupFacadeImpl(
         return participantService.joinGroupList(member = member, status = status, page = page).map { it.toResponse() }
     }
 
-    override fun members(memberId: String, groupId: String, page: Int): List<Member> {
+    override fun members(memberId: String, groupId: String, page: Int): List<MemberResponse> {
         val member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(groupId)
         participantService.checkParticipant(member = member, group = group)
-        return participantService.members(group = group, page = page)
+        return participantService.members(group = group, page = page).map { it.toResponse() }
     }
 
     override fun popularity(): List<GroupResponse> {
