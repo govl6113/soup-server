@@ -17,7 +17,6 @@ import com.github.soup.post.exception.NotFoundPostAuthorityException
 import com.github.soup.post.infra.http.request.CreatePostRequest
 import com.github.soup.post.infra.http.request.UpdatePostRequest
 import com.github.soup.post.infra.http.response.PostResponse
-import org.springframework.data.domain.Page
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -60,7 +59,7 @@ class PostFacadeImpl(
         return post.toResponse()
     }
 
-    override fun getList(memberId: String, groupId: String, type: PostTypeEnum, page: Int): Page<PostResponse> {
+    override fun getList(memberId: String, groupId: String, type: PostTypeEnum, page: Int): List<PostResponse> {
         val member: Member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(groupId)
 

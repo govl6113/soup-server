@@ -51,6 +51,7 @@ class Post(
         return PostResponse(
             id = id.toString(),
             writer = writer.toResponse(),
+            group = group.toResponse(),
             type = type,
             title = title,
             content = content,

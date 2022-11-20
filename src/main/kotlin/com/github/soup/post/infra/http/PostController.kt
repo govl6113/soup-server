@@ -6,7 +6,6 @@ import com.github.soup.post.infra.http.request.CreatePostRequest
 import com.github.soup.post.infra.http.request.UpdatePostRequest
 import com.github.soup.post.infra.http.response.PostResponse
 import io.swagger.annotations.ApiOperation
-import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
@@ -38,7 +37,7 @@ class PostController(
         @PathVariable("groupId") groupId: String,
         @PathVariable("type") type: PostTypeEnum,
         @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
-    ): ResponseEntity<Page<PostResponse>> =
+    ): ResponseEntity<List<PostResponse>> =
         ResponseEntity.ok().body(
             postFacade.getList(
                 authentication.name,
