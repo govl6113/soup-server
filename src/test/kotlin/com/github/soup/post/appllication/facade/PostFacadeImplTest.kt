@@ -78,7 +78,8 @@ internal class PostFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -124,7 +125,8 @@ internal class PostFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -179,7 +181,8 @@ internal class PostFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -228,7 +231,8 @@ internal class PostFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -287,7 +291,8 @@ internal class PostFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 

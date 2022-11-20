@@ -20,7 +20,7 @@ class ScrapController(
     @PostMapping("/new")
     fun createScrap(
         @ApiIgnore authentication: Authentication,
-        @Valid request: CreateScrapRequest
+        @RequestBody @Valid request: CreateScrapRequest
     ): ResponseEntity<ScrapResponse> =
         ResponseEntity.ok().body(
             scrapFacade.create(
@@ -30,13 +30,13 @@ class ScrapController(
         )
 
     @ApiOperation(value = "스크랩 목록 조회")
-    @GetMapping("/list")
+    @GetMapping("/{memberId}/list")
     fun getList(
-        @ApiIgnore authentication: Authentication,
+        @PathVariable("memberId") memberId: String
     ): ResponseEntity<List<ScrapResponse>> =
         ResponseEntity.ok().body(
             scrapFacade.getList(
-                authentication.name,
+                memberId
             )
         )
 

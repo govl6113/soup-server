@@ -3,6 +3,7 @@ package com.github.soup.post.domain
 import com.github.soup.common.domain.Core
 import com.github.soup.group.domain.Group
 import com.github.soup.member.domain.Member
+import com.github.soup.post.attachment.domain.PostAttachment
 import com.github.soup.post.infra.http.request.UpdatePostRequest
 import com.github.soup.post.infra.http.response.PostResponse
 import javax.persistence.*
@@ -26,7 +27,17 @@ class Post(
     var title: String,
 
     @Column(nullable = false)
-    var content: String
+    var content: String,
+
+    @OneToMany(
+        targetEntity = PostAttachment::class,
+        mappedBy = "post",
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true
+    )
+    var attachments: MutableList<PostAttachment>? = mutableListOf()
+
 ) : Core() {
 
     fun update(request: UpdatePostRequest): Post {
@@ -44,7 +55,8 @@ class Post(
             title = title,
             content = content,
             createdAt = createdAt!!,
-            updatedAt = updatedAt!!
+            updatedAt = updatedAt!!,
+            postAttachments = attachments?.map { it.file.toResponse() }
         )
     }
 }

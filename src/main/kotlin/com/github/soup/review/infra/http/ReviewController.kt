@@ -19,7 +19,7 @@ class ReviewController(
     @PostMapping("/new")
     fun createReview(
         @ApiIgnore authentication: Authentication,
-        @Valid request: CreateReviewRequest
+        @RequestBody @Valid request: CreateReviewRequest
     ): ResponseEntity<ReviewResponse> =
         ResponseEntity.ok().body(
             reviewFacade.create(
@@ -32,7 +32,7 @@ class ReviewController(
     fun updateReview(
         @ApiIgnore authentication: Authentication,
         @PathVariable("reviewId") reviewId: String,
-        @Valid request: UpdateReviewRequest
+        @RequestBody @Valid request: UpdateReviewRequest
     ): ResponseEntity<ReviewResponse> =
         ResponseEntity.ok().body(
             reviewFacade.update(
