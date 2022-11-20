@@ -5,7 +5,6 @@ import com.github.soup.post.domain.Post
 import com.github.soup.post.domain.PostTypeEnum
 import com.github.soup.post.exception.NotFoundPostException
 import com.github.soup.post.infra.persistence.PostRepositoryImpl
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,7 +20,7 @@ class PostServiceImpl(
         return postRepository.save(post)
     }
 
-    override fun getByGroupAndType(group: Group, type: PostTypeEnum, page: Int): Page<Post> {
+    override fun getByGroupAndType(group: Group, type: PostTypeEnum, page: Int): List<Post> {
         return postRepository.getListByType(
             group,
             type,
