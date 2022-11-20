@@ -69,6 +69,7 @@ class ParticipantRepositoryImpl(
                 .select(participant.count())
                 .from(participant)
                 .where(
+                    participant.group.eq(group),
                     participant.isAccepted.eq(true)
                 )
                 .fetchFirst()

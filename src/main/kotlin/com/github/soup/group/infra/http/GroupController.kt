@@ -140,7 +140,7 @@ class GroupController(
     fun popularity(): ResponseEntity<List<GroupResponse>> = ResponseEntity.ok().body(groupFacade.popularity())
 
 
-    @ApiOperation(value = "참여 중인 인원 확인")
+    @ApiOperation(value = "참여 중인 인원 수 확인")
     @GetMapping("/{groupId}/count")
     fun getParticipantCount(
         @PathVariable("groupId") groupId: String
