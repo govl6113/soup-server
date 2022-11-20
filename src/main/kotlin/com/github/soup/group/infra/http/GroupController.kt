@@ -104,15 +104,15 @@ class GroupController(
         )
 
     @ApiOperation(value = "참여 그룹 목록")
-    @GetMapping("/list/join")
+    @GetMapping("/{memberId}/list/join")
     fun joinList(
-        @ApiIgnore authentication: Authentication,
+        @PathVariable("memberId") memberId: String,
         @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
         @RequestParam(value = "status", required = true, defaultValue = "PROGRESS") status: GroupStatusEnum,
     ): ResponseEntity<List<GroupResponse>> {
         return ResponseEntity.ok().body(
             groupFacade.joinGroups(
-                memberId = authentication.name,
+                memberId = memberId,
                 status = status,
                 page = page
             )

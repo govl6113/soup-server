@@ -18,7 +18,7 @@ class CommentController(
     @PostMapping("/new")
     fun createComment(
         @ApiIgnore authentication: Authentication,
-        @Valid request: CreateCommentRequest
+        @RequestBody @Valid request: CreateCommentRequest
     ): ResponseEntity<CommentResponse> =
         ResponseEntity.ok().body(
             commentFacade.create(

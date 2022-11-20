@@ -49,7 +49,7 @@ class ParticipantController(
     fun accept(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String,
-        @Valid request: AcceptParticipantRequest
+        @RequestBody @Valid request: AcceptParticipantRequest
     ): ResponseEntity<Boolean> =
         ResponseEntity.ok().body(
             participantFacade.accept(

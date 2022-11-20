@@ -78,7 +78,8 @@ internal class CommentFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -129,7 +130,8 @@ internal class CommentFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -200,7 +202,8 @@ internal class CommentFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -258,7 +261,8 @@ internal class CommentFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -294,7 +298,7 @@ internal class CommentFacadeImplTest(
             commentId = comment.id
         )
         em.clear()
-        
+
         assertThrows(NotFoundCommentException::class.java) {
             commentFacade.get(childComment.id)
         }
@@ -335,7 +339,8 @@ internal class CommentFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
@@ -421,7 +426,8 @@ internal class CommentFacadeImplTest(
                 groupId = group.id,
                 type = PostTypeEnum.NOTICE,
                 title = "title",
-                content = "content"
+                content = "content",
+                images = null
             )
         )
 
