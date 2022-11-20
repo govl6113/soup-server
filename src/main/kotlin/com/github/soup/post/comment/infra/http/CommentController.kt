@@ -27,7 +27,7 @@ class CommentController(
             )
         )
 
-    @PostMapping("/{postId}")
+    @GetMapping("/{postId}")
     fun getComments(
         @PathVariable("postId") postId: String
     ): ResponseEntity<List<CommentResponse>> =

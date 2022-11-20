@@ -28,7 +28,7 @@ class CommentRepositoryImpl(
                 comment.post.eq(post),
                 comment.parent.isNull
             )
-            .orderBy(comment.createdAt.desc())
+            .orderBy(comment.createdAt.asc())
             .fetch()
     }
 
