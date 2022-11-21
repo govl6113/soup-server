@@ -9,36 +9,36 @@ import javax.validation.constraints.NotNull
 
 @Entity
 class Member(
-    @NotBlank
-    @Column(nullable = false)
-    var name: String,
+	@NotBlank
+	@Column(nullable = false)
+	var name: String,
 
-    @NotBlank
-    @Column(nullable = false)
-    var nickname: String,
+	@NotBlank
+	@Column(nullable = false)
+	var nickname: String,
 
-    @NotNull
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    val sex: SexType,
+	@NotNull
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	val sex: SexType,
 
-    @Column(nullable = true)
-    var bio: String? = null,
+	@Column(nullable = true)
+	var bio: String? = null,
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id", nullable = true)
-    var profileImage: File? = null,
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "profile_id", nullable = true)
+	var profileImage: File? = null,
 ) : Core() {
-    fun toResponse(): MemberResponse {
-        return MemberResponse(
-            id!!,
-            name,
-            nickname,
-            sex,
-            bio,
-            profileImage?.toResponse(),
-            createdAt!!,
-            updatedAt!!,
-        )
-    }
+	fun toResponse(): MemberResponse {
+		return MemberResponse(
+			id = id!!,
+			name = name,
+			nickName = nickname,
+			sex = sex,
+			bio = bio,
+			image = profileImage?.toResponse(),
+			createdAt = createdAt!!,
+			updatedAt = updatedAt!!,
+		)
+	}
 }
