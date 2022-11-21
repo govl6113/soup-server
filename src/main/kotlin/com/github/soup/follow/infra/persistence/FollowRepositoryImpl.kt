@@ -21,6 +21,10 @@ class FollowRepositoryImpl(
         return followRepository.findByTo(to)
     }
 
+    override fun getByFromIdAndToId(fromId: String, toId: String): Follow?{
+        return followRepository.getByFromIdAndToId(fromId, toId)
+    }
+
     override fun getByMemberAndTo(member: Member, followId: String): Follow? {
         return followRepository.getByFromAndToId(member, followId)
     }

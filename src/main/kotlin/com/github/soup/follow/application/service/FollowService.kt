@@ -10,6 +10,8 @@ interface FollowService {
 
     fun getToList(member: Member): List<Follow>
 
+    fun getByFromIdAndToId(fromId: String, toId: String): Follow?
+
     fun getByMemberAndTo(member: Member, followId: String): Follow
 
     fun delete(follow: Follow)

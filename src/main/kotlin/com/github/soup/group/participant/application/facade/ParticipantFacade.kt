@@ -11,5 +11,7 @@ interface ParticipantFacade {
 
     fun accept(memberId: String, groupId: String, request: AcceptParticipantRequest): Boolean
 
+    fun isRegister(memberId: String, groupId: String): Boolean
+
     fun isParticipant(memberId: String, groupId: String): Boolean
 }

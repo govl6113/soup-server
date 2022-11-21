@@ -26,6 +26,10 @@ class FollowServiceImpl(
         return followRepository.getByTo(member)
     }
 
+    override fun getByFromIdAndToId(fromId: String, toId: String):  Follow?{
+        return followRepository.getByFromIdAndToId(fromId, toId)
+    }
+
     override fun getByMemberAndTo(member: Member, followId: String): Follow {
         return followRepository.getByMemberAndTo(member, followId) ?: throw NotFoundFollowException()
     }

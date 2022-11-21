@@ -12,6 +12,8 @@ interface ParticipantService {
 
 	fun getByMemberIdAndGroup(memberId: String, group: Group): Participant?
 
+	fun checkRegister(member: Member, group: Group): Boolean
+
 	fun checkParticipant(member: Member, group: Group): Boolean
 
 	fun joinGroupList(member: Member, status: GroupStatusEnum, page: Int): List<Group>
@@ -19,5 +21,4 @@ interface ParticipantService {
 	fun members(group: Group, page: Int): List<Member>
 
 	fun getParticipantCount(group: Group): Int
-
 }

@@ -24,6 +24,11 @@ class FollowFacadeImpl(
 			throw NotFollowSelfException()
 		}
 
+		val follow: Follow? = followService.getByFromIdAndToId(fromId, targetId)
+		if(follow != null){
+			return follow.toResponse()
+		}
+		
 		return followService.save(
 			Follow(
 				from = memberService.getByMemberId(fromId),

@@ -9,5 +9,7 @@ interface FollowJpaRepository : JpaRepository<Follow, String> {
 
     fun findByTo(to: Member): List<Follow>
 
+    fun getByFromIdAndToId(fromId: String, toId: String): Follow?
+
     fun getByFromAndToId(from: Member, toId: String): Follow?
 }

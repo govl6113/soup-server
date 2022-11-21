@@ -68,7 +68,13 @@ class ParticipantFacadeImpl(
 		return true
 	}
 
-	@Transactional
+	override fun isRegister(memberId: String, groupId: String): Boolean {
+		return participantService.checkRegister(
+			member = memberService.getByMemberId(memberId),
+			group = groupService.getById(groupId)
+		)
+	}
+
 	override fun isParticipant(memberId: String, groupId: String): Boolean {
 		return participantService.checkParticipant(
 			member = memberService.getByMemberId(memberId),

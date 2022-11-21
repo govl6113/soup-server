@@ -59,9 +59,22 @@ class ParticipantController(
             )
         )
 
-    @ApiOperation(value = "참여 여부 확인")
-    @GetMapping("/check/{groupId}")
-    fun check(
+    @ApiOperation(value = "참여 신청 여부 확인")
+    @GetMapping("/check/{groupId}/register")
+    fun checkRegister(
+        @ApiIgnore authentication: Authentication,
+        @PathVariable("groupId") groupId: String
+    ): ResponseEntity<Boolean> =
+        ResponseEntity.ok().body(
+            participantFacade.isRegister(
+                authentication.name,
+                groupId
+            )
+        )
+
+    @ApiOperation(value = "참여 수락 여부 확인")
+    @GetMapping("/check/{groupId}/participant")
+    fun checkParticipant(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String
     ): ResponseEntity<Boolean> =

@@ -13,7 +13,7 @@ interface ParticipantRepository {
 
     fun getByGroupAndIsAccepted(group: Group, pageable: Pageable, isAccepted: Boolean?): List<Participant>
 
-    fun getByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean): Participant?
+    fun getByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean?): Participant?
 
     fun getJoinList(member: Member, status: GroupStatusEnum, pageable: Pageable): List<Group>
 

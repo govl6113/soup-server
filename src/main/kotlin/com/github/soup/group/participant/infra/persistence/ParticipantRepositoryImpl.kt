@@ -43,8 +43,15 @@ class ParticipantRepositoryImpl(
             .fetch()
     }
 
-    override fun getByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean): Participant? {
-        return participantRepository.findByMemberAndGroupAndIsAccepted(member, group, isAccepted)
+    override fun getByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean?): Participant? {
+        return queryFactory
+            .selectFrom(participant)
+            .where(
+                participant.member.eq(member),
+                participant.group.eq(group),
+                isAcceptedEq(isAccepted)
+            )
+            .fetchOne()
     }
 
     override fun getJoinList(member: Member, status: GroupStatusEnum, pageable: Pageable): List<Group> {

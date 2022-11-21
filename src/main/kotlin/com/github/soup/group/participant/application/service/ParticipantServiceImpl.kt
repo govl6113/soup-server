@@ -42,6 +42,14 @@ class ParticipantServiceImpl(
 		return participantRepository.getByMemberIdAndGroup(memberId, group)
 	}
 
+	override fun checkRegister(member: Member, group: Group): Boolean {
+		return participantRepository.getByMemberAndGroupAndIsAccepted(
+			member,
+			group,
+			null
+		) != null
+	}
+
 	override fun checkParticipant(member: Member, group: Group): Boolean {
 		return participantRepository.getByMemberAndGroupAndIsAccepted(
 			member,
