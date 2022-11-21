@@ -9,49 +9,49 @@ import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
 import com.github.soup.member.infra.http.response.MemberResponse
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
+@Transactional(readOnly = true)
 class FollowFacadeImpl(
-    private val followService: FollowServiceImpl,
-    private val memberService: MemberServiceImpl,
+	private val followService: FollowServiceImpl,
+	private val memberService: MemberServiceImpl,
 ) : FollowFacade {
 
-    override fun create(fromId: String, targetId: String): FollowResponse {
-        if (fromId != targetId) {
-            throw NotFollowSelfException()
+	@Transactional
+	override fun create(fromId: String, targetId: String): FollowResponse {
+		if (fromId == targetId) {
+			throw NotFollowSelfException()
+		}
 
-        }
+		return followService.save(
+			Follow(
+				from = memberService.getByMemberId(fromId),
+				to = memberService.getByMemberId(targetId)
+			)
+		).toResponse()
+	}
 
-        val from: Member = memberService.getByMemberId(fromId)
-        val to: Member = memberService.getByMemberId(targetId)
+	override fun getFollowingList(memberId: String): List<MemberResponse> {
+		val from: Member = memberService.getByMemberId(memberId)
+		return followService.getFromList(from).map { f -> f.from.toResponse() }
+	}
 
-        return followService.save(
-            Follow(
-                from = from,
-                to = to
-            )
-        ).toResponse()
-    }
+	override fun getFollowerList(memberId: String): List<MemberResponse> {
+		val to: Member = memberService.getByMemberId(memberId)
+		return followService.getToList(to).map { f -> f.to.toResponse() }
+	}
 
-    override fun getFollowingList(memberId: String): List<MemberResponse> {
-        val from: Member = memberService.getByMemberId(memberId)
-        return followService.getFromList(from).map { f -> f.from.toResponse() }
-    }
+	@Transactional
+	override fun delete(memberId: String, followId: String): Boolean {
+		val member: Member = memberService.getByMemberId(memberId)
+		val follow: Follow = followService.getByMemberAndTo(member, followId)
 
-    override fun getFollowerList(memberId: String): List<MemberResponse> {
-        val to: Member = memberService.getByMemberId(memberId)
-        return followService.getToList(to).map { f -> f.to.toResponse() }
-    }
-
-    override fun delete(memberId: String, followId: String): Boolean {
-        val member: Member = memberService.getByMemberId(memberId)
-        val follow: Follow = followService.getByMemberAndTo(member, followId)
-
-        if (!member.id.equals(follow.from.id)) {
-            throw NotFoundFollowAuthorityException()
-        }
-        followService.delete(follow)
-        return true
-    }
+		if (!member.id.equals(follow.from.id)) {
+			throw NotFoundFollowAuthorityException()
+		}
+		followService.delete(follow)
+		return true
+	}
 
 }
