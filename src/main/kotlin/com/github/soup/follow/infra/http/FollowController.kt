@@ -12,53 +12,53 @@ import springfox.documentation.annotations.ApiIgnore
 @RestController
 @RequestMapping("/api/follow")
 class FollowController(
-    private val followFacade: FollowFacadeImpl
+	private val followFacade: FollowFacadeImpl
 ) {
 
-    @PostMapping("/new/{targetId}")
-    fun createFollow(
-        @ApiIgnore authentication: Authentication,
-        @PathVariable("targetId") targetId: String
-    ): ResponseEntity<FollowResponse> =
-        ResponseEntity.ok().body(
-            followFacade.create(
-                authentication.name,
-                targetId
-            )
-        )
+	@PostMapping("/new/{targetId}")
+	fun createFollow(
+		@ApiIgnore authentication: Authentication,
+		@PathVariable("targetId") targetId: String
+	): ResponseEntity<FollowResponse> =
+		ResponseEntity.ok().body(
+			followFacade.create(
+				authentication.name,
+				targetId
+			)
+		)
 
-    @ApiOperation(value = "팔로잉 목록 조회")
-    @GetMapping("/following")
-    fun getFromList(
-        @ApiIgnore authentication: Authentication,
-    ): ResponseEntity<List<MemberResponse>> =
-        ResponseEntity.ok().body(
-            followFacade.getFollowingList(
-                authentication.name,
-            )
-        )
+	@ApiOperation(value = "팔로잉 목록 조회")
+	@GetMapping("/following/{memberId}")
+	fun getFromList(
+		@PathVariable("memberId") memberId: String
+	): ResponseEntity<List<MemberResponse>> =
+		ResponseEntity.ok().body(
+			followFacade.getFollowingList(
+				memberId,
+			)
+		)
 
-    @ApiOperation(value = "팔로워 목록 조회")
-    @GetMapping("/follower")
-    fun getToList(
-        @ApiIgnore authentication: Authentication,
-    ): ResponseEntity<List<MemberResponse>> =
-        ResponseEntity.ok().body(
-            followFacade.getFollowerList(
-                authentication.name,
-            )
-        )
+	@ApiOperation(value = "팔로워 목록 조회")
+	@GetMapping("/follower/{memberId}")
+	fun getToList(
+		@PathVariable("memberId") memberId: String,
+	): ResponseEntity<List<MemberResponse>> =
+		ResponseEntity.ok().body(
+			followFacade.getFollowerList(
+				memberId,
+			)
+		)
 
 
-    @DeleteMapping("/{targetId}")
-    fun deleteFollow(
-        @ApiIgnore authentication: Authentication,
-        @PathVariable("targetId") targetId: String
-    ): ResponseEntity<Boolean> =
-        ResponseEntity.ok().body(
-            followFacade.delete(
-                authentication.name,
-                targetId
-            )
-        )
+	@DeleteMapping("/{targetId}")
+	fun deleteFollow(
+		@ApiIgnore authentication: Authentication,
+		@PathVariable("targetId") targetId: String
+	): ResponseEntity<Boolean> =
+		ResponseEntity.ok().body(
+			followFacade.delete(
+				authentication.name,
+				targetId
+			)
+		)
 }
