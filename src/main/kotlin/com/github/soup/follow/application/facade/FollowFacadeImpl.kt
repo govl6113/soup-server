@@ -34,12 +34,12 @@ class FollowFacadeImpl(
 
 	override fun getFollowingList(memberId: String): List<MemberResponse> {
 		val from: Member = memberService.getByMemberId(memberId)
-		return followService.getFromList(from).map { f -> f.from.toResponse() }
+		return followService.getFromList(from).map { f -> f.to.toResponse() }
 	}
 
 	override fun getFollowerList(memberId: String): List<MemberResponse> {
 		val to: Member = memberService.getByMemberId(memberId)
-		return followService.getToList(to).map { f -> f.to.toResponse() }
+		return followService.getToList(to).map { f -> f.from.toResponse() }
 	}
 
 	@Transactional
