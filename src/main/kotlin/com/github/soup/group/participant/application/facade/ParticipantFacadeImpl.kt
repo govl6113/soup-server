@@ -4,6 +4,7 @@ import com.github.soup.group.application.service.GroupServiceImpl
 import com.github.soup.group.domain.Group
 import com.github.soup.group.exception.NotFoundManagerAuthorityException
 import com.github.soup.group.participant.application.service.ParticipantServiceImpl
+import com.github.soup.group.participant.exception.ExceededPersonnelException
 import com.github.soup.group.participant.infra.http.request.AcceptParticipantRequest
 import com.github.soup.group.participant.infra.http.request.CreateParticipantRequest
 import com.github.soup.group.participant.infra.http.response.ParticipantResponse
@@ -26,6 +27,9 @@ class ParticipantFacadeImpl(
 		val member: Member = memberService.getByMemberId(memberId)
 		val group: Group = groupService.getById(request.groupId)
 
+		if(group.personnel<participantService.getParticipantCount(group)){
+			throw ExceededPersonnelException()
+		}
 		if (group.recruitment == GroupRecruitmentEnum.FIRSTCOME) {
 			participantService.save(
 				group = group,

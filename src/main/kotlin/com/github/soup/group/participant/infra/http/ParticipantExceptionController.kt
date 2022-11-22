@@ -1,5 +1,6 @@
 package com.github.soup.group.participant.infra.http
 
+import com.github.soup.group.participant.exception.ExceededPersonnelException
 import com.github.soup.group.participant.exception.NotParticipantException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,6 +12,11 @@ class ParticipantExceptionController {
 
     @ExceptionHandler(value = [NotParticipantException::class])
     fun notParticipantException(exception: NotParticipantException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.message)
+    }
+
+    @ExceptionHandler(value = [ExceededPersonnelException::class])
+    fun exceededPersonnelException(exception: ExceededPersonnelException): ResponseEntity<String> {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.message)
     }
 }

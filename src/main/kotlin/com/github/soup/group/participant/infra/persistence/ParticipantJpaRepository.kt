@@ -6,7 +6,6 @@ import com.github.soup.member.domain.Member
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ParticipantJpaRepository : JpaRepository<Participant, String> {
-    fun findByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean): Participant?
 
     fun findByMemberIdAndGroup(memberId: String, group: Group): Participant?
 }
