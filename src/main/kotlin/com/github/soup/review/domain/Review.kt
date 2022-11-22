@@ -1,6 +1,7 @@
 package com.github.soup.review.domain
 
 import com.github.soup.common.domain.Core
+import com.github.soup.group.domain.Group
 import com.github.soup.member.domain.Member
 import com.github.soup.review.infra.http.response.ReviewResponse
 import javax.persistence.*
@@ -14,6 +15,10 @@ class Review(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_id")
     var to: Member,
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    var group: Group,
 
     @Column(nullable = false)
     var content: String,
@@ -33,6 +38,7 @@ class Review(
             id = id.toString(),
             from = from.toResponse(),
             to = to.toResponse(),
+            group = group.toResponse(),
             content = content,
             score = score,
             createdAt = createdAt!!,

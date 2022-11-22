@@ -1,5 +1,7 @@
 package com.github.soup.review.application.facade
 
+import com.github.soup.group.application.service.GroupServiceImpl
+import com.github.soup.group.domain.Group
 import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
 import com.github.soup.review.application.service.ReviewServiceImpl
@@ -17,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class ReviewFacadeImpl(
     private val reviewService: ReviewServiceImpl,
-    private val memberService: MemberServiceImpl
+    private val memberService: MemberServiceImpl,
+    private val groupService: GroupServiceImpl
 ) : ReviewFacade {
 
     @Transactional
@@ -27,11 +30,13 @@ class ReviewFacadeImpl(
         }
         val member: Member = memberService.getByMemberId(memberId)
         val target: Member = memberService.getByMemberId(request.targetId)
+        val group: Group = groupService.getById(request.groupId)
 
         return reviewService.save(
             Review(
                 from = member,
                 to = target,
+                group = group,
                 content = request.content,
                 score = request.score
             )
@@ -66,6 +71,10 @@ class ReviewFacadeImpl(
         }
 
         return review.toResponse()
+    }
+
+    override fun check(memberId: String, groupId: String, toId: String): Boolean {
+        return reviewService.getByFromIdAndToIdAndGroupId(memberId, toId, groupId)!=null
     }
 
     @Transactional

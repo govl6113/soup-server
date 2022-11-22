@@ -11,5 +11,7 @@ interface ReviewRepository {
 
     fun getByToId(toId: String, pageable: Pageable): List<Review>
 
+    fun getByFromIdAndToIdAndGroupId(fromId: String, toId: String, groupId: String):Review?
+
     fun delete(review: Review)
 }

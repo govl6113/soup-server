@@ -9,5 +9,7 @@ interface ReviewService {
 
     fun getByToId(toId: String, page: Int): List<Review>
 
+    fun getByFromIdAndToIdAndGroupId(fromId: String, toId: String, groupId: String):Review?
+
     fun delete(review: Review)
 }

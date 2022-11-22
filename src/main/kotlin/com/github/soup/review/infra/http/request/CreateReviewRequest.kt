@@ -7,6 +7,9 @@ data class CreateReviewRequest(
     var targetId: String,
 
     @NotBlank
+    var groupId: String,
+
+    @NotBlank
     var content: String,
 
     var score: Float,

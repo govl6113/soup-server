@@ -68,6 +68,20 @@ class ReviewController(
             )
         )
 
+    @GetMapping("/check/{groupId}/{toId}")
+    fun check(
+        @ApiIgnore authentication: Authentication,
+        @PathVariable("groupId") groupId: String,
+        @PathVariable("toId") toId: String
+    ): ResponseEntity<Boolean> =
+        ResponseEntity.ok().body(
+            reviewFacade.check(
+                authentication.name,
+                groupId,
+                toId
+            )
+        )
+
     @DeleteMapping("/{reviewId}")
     fun deleteScrap(
         @ApiIgnore authentication: Authentication,

@@ -23,6 +23,10 @@ class ReviewRepositoryImpl(
         return reviewRepository.findByToId(toId, pageable)
     }
 
+    override fun getByFromIdAndToIdAndGroupId(fromId: String, toId: String, groupId: String):Review?{
+        return reviewRepository.findByFromIdAndToIdAndGroupId(fromId, toId, groupId)
+    }
+
     override fun delete(review: Review) {
         reviewRepository.delete(review)
     }

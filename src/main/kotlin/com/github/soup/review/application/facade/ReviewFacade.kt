@@ -15,5 +15,7 @@ interface ReviewFacade {
 
     fun get(memberId: String, reviewId: String): ReviewResponse
 
+    fun check(memberId: String, groupId: String, toId: String): Boolean
+
     fun delete(memberId: String, reviewId: String): Boolean
 }
