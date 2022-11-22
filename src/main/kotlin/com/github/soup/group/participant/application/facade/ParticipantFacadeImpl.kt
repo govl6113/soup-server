@@ -27,10 +27,11 @@ class ParticipantFacadeImpl(
 		val member: Member = memberService.getByMemberId(memberId)
 		val group: Group = groupService.getById(request.groupId)
 
-		if(group.personnel<participantService.getParticipantCount(group)){
-			throw ExceededPersonnelException()
-		}
 		if (group.recruitment == GroupRecruitmentEnum.FIRSTCOME) {
+			if(group.personnel<participantService.getParticipantCount(group)){
+				throw ExceededPersonnelException()
+			}
+
 			participantService.save(
 				group = group,
 				member = member,
@@ -66,6 +67,10 @@ class ParticipantFacadeImpl(
 
 		if (!member.id.equals(group.manager.id)) {
 			throw NotFoundManagerAuthorityException()
+		}
+
+		if(group.personnel<=request.memberIdList.size){
+			throw ExceededPersonnelException()
 		}
 
 		request.memberIdList.forEach { participantService.getByMemberIdAndGroup(it, group)?.isAccepted = true }
