@@ -6,9 +6,9 @@ import com.github.soup.group.exception.NotFoundManagerAuthorityException
 import com.github.soup.group.participant.application.service.ParticipantServiceImpl
 import com.github.soup.group.participant.infra.http.request.AcceptParticipantRequest
 import com.github.soup.group.participant.infra.http.request.CreateParticipantRequest
+import com.github.soup.group.participant.infra.http.response.ParticipantResponse
 import com.github.soup.member.application.service.MemberServiceImpl
 import com.github.soup.member.domain.Member
-import com.github.soup.member.infra.http.response.MemberResponse
 import kr.soupio.soup.group.entities.GroupRecruitmentEnum
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -45,14 +45,14 @@ class ParticipantFacadeImpl(
 		return true
 	}
 
-	override fun participantList(memberId: String, groupId: String, page: Int): List<MemberResponse> {
+	override fun participantList(memberId: String, groupId: String): List<ParticipantResponse> {
 		val member: Member = memberService.getByMemberId(memberId)
 		val group: Group = groupService.getById(groupId)
 
 		if (!member.id.equals(group.manager.id)) {
 			throw NotFoundManagerAuthorityException()
 		}
-		return participantService.getParticipantList(group, page).map { member.toResponse() }
+		return participantService.getParticipantList(group)
 	}
 
 	@Transactional

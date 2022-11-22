@@ -88,11 +88,11 @@ class GroupFacadeImpl(
         return participantService.joinGroupList(member = member, status = status, page = page).map { it.toResponse() }
     }
 
-    override fun members(memberId: String, groupId: String, page: Int): List<MemberResponse> {
+    override fun members(memberId: String, groupId: String): List<MemberResponse> {
         val member = memberService.getByMemberId(memberId)
         val group: Group = groupService.getById(groupId)
         participantService.checkParticipant(member = member, group = group)
-        return participantService.members(group = group, page = page).map { it.toResponse() }
+        return participantService.members(group = group)
     }
 
     override fun popularity(): List<GroupResponse> {

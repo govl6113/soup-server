@@ -3,7 +3,7 @@ package com.github.soup.group.participant.infra.http
 import com.github.soup.group.participant.application.facade.ParticipantFacadeImpl
 import com.github.soup.group.participant.infra.http.request.AcceptParticipantRequest
 import com.github.soup.group.participant.infra.http.request.CreateParticipantRequest
-import com.github.soup.member.infra.http.response.MemberResponse
+import com.github.soup.group.participant.infra.http.response.ParticipantResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
@@ -34,13 +34,11 @@ class ParticipantController(
     fun participantList(
         @ApiIgnore authentication: Authentication,
         @PathVariable("groupId") groupId: String,
-        @RequestParam(value = "page", required = false, defaultValue = "1") page: Int
-    ): ResponseEntity<List<MemberResponse>> =
+    ): ResponseEntity<List<ParticipantResponse>> =
         ResponseEntity.ok().body(
             participantFacade.participantList(
                 authentication.name,
-                groupId,
-                page
+                groupId
             )
         )
 

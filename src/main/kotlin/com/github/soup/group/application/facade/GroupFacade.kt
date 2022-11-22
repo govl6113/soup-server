@@ -23,7 +23,7 @@ interface GroupFacade {
 
     fun joinGroups(memberId: String, status: GroupStatusEnum, page: Int): List<GroupResponse>
 
-    fun members(memberId: String, groupId: String, page: Int): List<MemberResponse>
+    fun members(memberId: String, groupId: String): List<MemberResponse>
 
     fun popularity(): List<GroupResponse>
 

@@ -2,6 +2,7 @@ package com.github.soup.group.participant.domain
 
 import com.github.soup.group.domain.Group
 import com.github.soup.group.domain.GroupStatusEnum
+import com.github.soup.group.participant.infra.http.response.ParticipantResponse
 import com.github.soup.member.domain.Member
 import org.springframework.data.domain.Pageable
 
@@ -11,7 +12,7 @@ interface ParticipantRepository {
 
     fun getByMemberIdAndGroup(memberId: String, group: Group): Participant?
 
-    fun getByGroupAndIsAccepted(group: Group, pageable: Pageable, isAccepted: Boolean?): List<Participant>
+    fun getByGroupAndIsAccepted(group: Group, isAccepted: Boolean?): List<ParticipantResponse>
 
     fun getByMemberAndGroupAndIsAccepted(member: Member, group: Group, isAccepted: Boolean?): Participant?
 

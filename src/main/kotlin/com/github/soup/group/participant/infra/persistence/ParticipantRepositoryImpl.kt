@@ -8,7 +8,9 @@ import com.github.soup.group.domain.QGroup.group
 import com.github.soup.group.participant.domain.Participant
 import com.github.soup.group.participant.domain.ParticipantRepository
 import com.github.soup.group.participant.domain.QParticipant.participant
+import com.github.soup.group.participant.infra.http.response.ParticipantResponse
 import com.github.soup.member.domain.Member
+import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Pageable
@@ -28,9 +30,17 @@ class ParticipantRepositoryImpl(
         return participantRepository.findByMemberIdAndGroup(memberId, group)
     }
 
-    override fun getByGroupAndIsAccepted(group: Group, pageable: Pageable, isAccepted: Boolean?): List<Participant> {
+    override fun getByGroupAndIsAccepted(group: Group, isAccepted: Boolean?): List<ParticipantResponse> {
         return queryFactory
-            .selectFrom(participant)
+            .select(Projections.constructor(
+                ParticipantResponse::class.java,
+                participant.id,
+                participant.createdAt,
+                participant.updatedAt,
+                participant.member,
+                participant.message
+            ))
+            .from(participant)
             .leftJoin(participant.group, QGroup.group)
             .leftJoin(QGroup.group.image, file)
             .where(
@@ -38,8 +48,6 @@ class ParticipantRepositoryImpl(
                 isAcceptedEq(isAccepted)
             )
             .orderBy(participant.group.createdAt.desc())
-            .offset(pageable.offset)
-            .limit(pageable.pageSize.toLong())
             .fetch()
     }
 
@@ -62,6 +70,7 @@ class ParticipantRepositoryImpl(
             .leftJoin(group.image, file)
             .where(
                 participant.member.eq(member),
+                participant.isAccepted.eq(true),
                 stateEq(status)
             )
             .orderBy(participant.group.createdAt.desc())

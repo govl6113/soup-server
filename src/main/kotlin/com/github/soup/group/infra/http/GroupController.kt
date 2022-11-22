@@ -123,14 +123,12 @@ class GroupController(
     @GetMapping("/{groupId}/members")
     fun members(
         @ApiIgnore authentication: Authentication,
-        @PathVariable("groupId") groupId: String,
-        @RequestParam(value = "page", required = false, defaultValue = "1") page: Int,
+        @PathVariable("groupId") groupId: String
     ): ResponseEntity<List<MemberResponse>> {
         return ResponseEntity.ok().body(
             groupFacade.members(
                 memberId = authentication.name,
-                groupId = groupId,
-                page = page
+                groupId = groupId
             )
         )
     }

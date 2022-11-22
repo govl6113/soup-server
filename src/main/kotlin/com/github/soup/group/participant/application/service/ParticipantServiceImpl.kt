@@ -3,10 +3,11 @@ package com.github.soup.group.participant.application.service
 import com.github.soup.group.domain.Group
 import com.github.soup.group.domain.GroupStatusEnum
 import com.github.soup.group.participant.domain.Participant
+import com.github.soup.group.participant.infra.http.response.ParticipantResponse
 import com.github.soup.group.participant.infra.persistence.ParticipantRepositoryImpl
 import com.github.soup.member.domain.Member
+import com.github.soup.member.infra.http.response.MemberResponse
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -29,12 +30,10 @@ class ParticipantServiceImpl(
 		return true
 	}
 
-	override fun getParticipantList(group: Group, page: Int): List<Participant> {
-		val pageable: Pageable = PageRequest.of(page - 1, 10)
+	override fun getParticipantList(group: Group): List<ParticipantResponse> {
 		return participantRepository.getByGroupAndIsAccepted(
 			group = group,
-			pageable = pageable,
-			isAccepted = null
+			isAccepted = false
 		)
 	}
 
@@ -63,13 +62,8 @@ class ParticipantServiceImpl(
 		return participantRepository.getJoinList(member = member, status = status, pageable = pageable)
 	}
 
-	override fun members(group: Group, page: Int): List<Member> {
-		val pageable: Pageable = PageRequest.of(page - 1, 10)
-		return participantRepository.getByGroupAndIsAccepted(
-			group = group,
-			pageable = pageable,
-			isAccepted = true
-		).map { it.member }
+	override fun members(group: Group): List<MemberResponse> {
+		return participantRepository.getByGroupAndIsAccepted(group = group, isAccepted = true).map { it.member }
 	}
 
 	override fun getParticipantCount(group: Group): Int {
