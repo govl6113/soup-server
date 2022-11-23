@@ -43,6 +43,7 @@ class ScrapFacadeImpl(
         return scrapService.getByMember(member).map { s -> s.toResponse() }
     }
 
+    @Transactional
     override fun delete(memberId: String, scrapId: String): Boolean {
         val member: Member = memberService.getByMemberId(memberId)
         val scrap: Scrap = scrapService.getById(scrapId)
