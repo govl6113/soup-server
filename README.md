@@ -78,7 +78,8 @@
         <td colspan="2">
             <strong>Micro Service Architecture 에서 Monolithic Architecture 로 전환한 이유</strong>
             <p>
-            처음에는 Micro Service Architecture를 채택하여 인증 서버와 서비스 서버의 개발 및 배포 작업을 완료했습니다. 하지만 서버 자원과 비용 문제로 인해 Monolithic Architecture로 전환하게 되었습니다.</p>
+            [처음에는](https://github.com/govl6113/ce-soup-server/) Micro Service Architecture를 채택하여 인증 서버와 서비스 서버의 개발 및 배포 작업을 완료했습니다. 하지만 서버 자원과 비용 문제로 인해 Monolithic Architecture로 전환하게 되었습니다.
+            </p>
         </td>
     </tr>
 </table>
